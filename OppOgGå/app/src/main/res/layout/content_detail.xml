@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fields"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.prosjektfjell.oppogg.DetailActivity"
+    tools:showIn="@layout/activity_detail">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        app:srcCompat="@drawable/fjell2"
+        android:id="@+id/imageView2"
+        android:layout_margin="2dp"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Topphøyde"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentStart="true"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="12dp"
+        android:id="@+id/textHeight" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textHeight"
+        android:textColor="#FFFFFF"
+        android:paddingRight="20dp"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/textHeight" />
+
+    <TextView
+        android:text="Høydemeter tur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_alignStart="@+id/textView3"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginTop="12dp"
+        android:id="@+id/textHmeter" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textHmeter"
+        android:textColor="#FFFFFF"
+        android:paddingRight="20dp"
+        android:id="@+id/textView7"
+        android:layout_below="@+id/textHmeter" />
+
+    <TextView
+        android:text="Lengde tur/retur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView7"
+        android:layout_alignStart="@+id/textView7"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_marginTop="13dp"
+        android:id="@+id/texttotalL" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/texttotalL"
+        android:layout_alignStart="@+id/texttotalL"
+        android:textColor="#FFFFFF"
+        android:paddingRight="20dp"
+        android:id="@+id/textView11" />
+
+    <TextView
+        android:text="Tid tur/retur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView11"
+        android:layout_alignStart="@+id/textView11"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="16dp"
+        android:id="@+id/textTid" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textTid"
+        android:layout_alignStart="@+id/textTid"
+        android:textColor="#FFFFFF"
+        android:paddingRight="20dp"
+        android:id="@+id/textView13" />
+
+    <TextView
+        android:text="Sti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView13"
+        android:layout_alignStart="@+id/textView13"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="15dp"
+        android:id="@+id/textSti" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textSti"
+        android:layout_alignStart="@+id/textSti"
+        android:textColor="#FFFFFF"
+        android:paddingRight="20dp"
+        android:id="@+id/textView15" />
+
+    <TextView
+        android:text="Sko"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView15"
+        android:layout_alignStart="@+id/textView15"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="14dp"
+        android:id="@+id/textSko" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textSko"
+        android:layout_alignStart="@+id/textSko"
+        android:textColor="#FFFFFF"
+        android:paddingRight="20dp"
+        android:id="@+id/textView17"
+        android:text="bla bla" />
+
+    <TextView
+        android:text="Vanskelighetsgrad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView17"
+        android:layout_alignStart="@+id/textView17"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="13dp"
+        android:id="@+id/textGrad" />
+
+    <TextView
+        android:text="fdssgs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textGrad"
+        android:layout_alignStart="@+id/textGrad"
+        android:textColor="#ffffff"
+        android:paddingRight="20dp"
+        android:id="@+id/textView20" />
+
+</RelativeLayout>
