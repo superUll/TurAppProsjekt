@@ -3,6 +3,7 @@ package com.example.oleandreheggdal.fjellalper;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -36,7 +37,7 @@ public class ContentActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     ListView listFjell;
 
-    private static String url = "";
+    private static String url = "http://10.0.2.2:8080/UtOgOpp/services/list/mountains";
 
     ArrayList<HashMap<String, String>> fjellist;
 
@@ -48,9 +49,12 @@ public class ContentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         fjellist = new ArrayList<>();
-        new GetFjell().execute();
+        new GetMountain().execute();
 
         listFjell = (ListView) findViewById(R.id.fjelListe);
+        int[] colors = {0, 0xFFFFffff};
+        listFjell.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
+        listFjell.setDividerHeight(5);
         listFjell.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> listViewContacts, View view, int position, long id) {
@@ -61,7 +65,7 @@ public class ContentActivity extends AppCompatActivity {
             }
         });
     }
-    private class GetFjell extends AsyncTask<Void, Void, Void> {
+    private class GetMountain extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -92,7 +96,9 @@ public class ContentActivity extends AppCompatActivity {
                         JSONObject f = jsonArr.getJSONObject(i);
 
                         //String picture = f.getString("picture");
-                        String name = f.getString("conName");
+                        String name = f.getString("MName");
+                        String height = f.getString("MHeight");
+                        String muni = f.getString("MMunicipality");
 
                         // tmp hash map for single message
                         HashMap<String, String> message = new HashMap<>();
@@ -101,6 +107,8 @@ public class ContentActivity extends AppCompatActivity {
 
                        // message.put("Picture", picture);
                         message.put("name",name);
+                        message.put("height",height);
+                        message.put("muni",muni);
 
                         // adding message to message list
                         fjellist.add(message);
@@ -146,7 +154,8 @@ public class ContentActivity extends AppCompatActivity {
              * */
             ListAdapter adapter = new SimpleAdapter(
                     ContentActivity.this, fjellist,
-                    R.layout.mountain_list, new String[]{"name"}, new int[]{R.id.mountainName});
+                    R.layout.mountain_list, new String[]{"name","height","muni"},
+                    new int[]{R.id.mountainName,R.id.mHeight,R.id.muni});
 
             listFjell.setAdapter(adapter);
 
