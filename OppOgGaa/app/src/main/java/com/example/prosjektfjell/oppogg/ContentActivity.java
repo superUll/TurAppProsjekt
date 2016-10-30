@@ -2,9 +2,11 @@ package com.example.prosjektfjell.oppogg;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +38,14 @@ public class ContentActivity extends AppCompatActivity {
     private static String url = "http://10.0.2.2:8080/UtOgOpp/services/list/mountains";
 
     ArrayList<HashMap<String, String>> fjellist;
+    public static String getMname;
+    public static String getMheight;
+    public static String getMAltidude;
+    public static String getMLenght;
+    public static String getMtimespan;
+    public static String getMPath;
+    public static String getMterrain;
+    public static String getMgrade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +61,7 @@ public class ContentActivity extends AppCompatActivity {
         int[] colors = {0, 0xFFFFffff};
         listFjell.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
         listFjell.setDividerHeight(5);
-        listFjell.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> listViewContacts, View view, int position, long id) {
-                Intent intent = new Intent(ContentActivity.this, DetailActivity.class);
-                startActivity(intent);
 
-
-            }
-        });
     }
 
     private class GetMountain extends AsyncTask<Void, Void, Void> {
@@ -89,7 +91,7 @@ public class ContentActivity extends AppCompatActivity {
                     JSONArray jsonArr = new JSONArray(jsonStr);
 
 
-                    // looping through All messages
+                    // looping through All mountains
                     for (int i = 0; i < jsonArr.length(); i++) {
                         JSONObject f = jsonArr.getJSONObject(i);
 
@@ -97,19 +99,30 @@ public class ContentActivity extends AppCompatActivity {
                         String name = f.getString("MName");
                         String height = f.getString("MHeight");
                         String muni = f.getString("MMunicipality");
-
-                        // tmp hash map for single message
-                        HashMap<String, String> message = new HashMap<>();
+                        String altitude = f.getString("MAltitude");
+                        String lenght = f.getString("MLenght");
+                        String timeSpane = f.getString("MTimeSpan");
+                        String path = f.getString("MPath");
+                        String terrain = f.getString("MTerrain");
+                        String grade = f.getString("MDifficulty");
+                        // tmp hash map for single mountain
+                        HashMap<String, String> mountain = new HashMap<>();
 
                         // adding each child node to HashMap key => value
 
-                        // message.put("Picture", picture);
-                        message.put("name", name);
-                        message.put("height", height);
-                        message.put("muni", muni);
+                        // mountain.put("Picture", picture);
+                        mountain.put("name",name);
+                        mountain.put("height",height);
+                        mountain.put("muni",muni);
+                        mountain.put("alti",altitude);
+                        mountain.put("lenght",lenght);
+                        mountain.put("span",timeSpane);
+                        mountain.put("path",path);
+                        mountain.put("terrain",terrain);
+                        mountain.put("grade",grade);
 
-                        // adding message to message list
-                        fjellist.add(message);
+                        // adding mountain to mountain list
+                        fjellist.add(mountain);
                     }
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -154,8 +167,26 @@ public class ContentActivity extends AppCompatActivity {
                     ContentActivity.this, fjellist,
                     R.layout.mountain_list, new String[]{"name", "height", "muni"},
                     new int[]{R.id.mountainName, R.id.mHeight, R.id.muni});
-
             listFjell.setAdapter(adapter);
+            listFjell.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    HashMap<String,String> map =(HashMap<String,String>)listFjell.getItemAtPosition(position);
+                    getMname = map.get("name");
+                    getMheight = map.get("height");
+                    getMLenght = map.get("lenght");
+                    getMAltidude = map.get("alti");
+                    getMPath = map.get("path");
+                    getMtimespan = map.get("span");
+                    getMterrain = map.get("terrain");
+                    getMgrade = map.get("grade");
+
+                    Intent intent = new Intent(ContentActivity.this, DetailActivity.class);
+                    startActivity(intent);
+
+
+                }
+            });
 
         }
 
@@ -186,4 +217,5 @@ public class ContentActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
 
     }
+
 }
