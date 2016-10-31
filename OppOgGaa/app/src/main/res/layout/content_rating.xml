@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_rating"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.prosjektfjell.oppogg.RatingActivity"
+    tools:showIn="@layout/activity_rating"
+    android:background="#1c1c1c">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/utsikt"
+        android:id="@+id/text_utsikt"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="#fafafa"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:id="@+id/ratingBar_utsikt"
+        android:numStars="5"
+
+        android:stepSize="0.5"
+        android:progressBackgroundTint="#C0C0C0"
+        android:progressTint="#FFD700"
+        android:secondaryProgressTint="#000000"
+        android:layout_below="@+id/text_utsikt"
+        android:layout_alignParentStart="true" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:id="@+id/ratingBar_tursti"
+        android:numStars="5"
+
+        android:stepSize="0.5"
+        android:progressBackgroundTint="#C0C0C0"
+        android:progressTint="#FFD700"
+        android:secondaryProgressTint="#000000"
+        android:layout_below="@+id/text_tursti"
+        android:layout_alignParentStart="true" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:id="@+id/ratingBar_tilgjengelighet"
+        android:numStars="5"
+
+        android:stepSize="0.5"
+        android:progressBackgroundTint="#C0C0C0"
+        android:progressTint="#FFD700"
+        android:secondaryProgressTint="#000000"
+        android:layout_below="@+id/ratingBar_tursti"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tursti"
+        android:id="@+id/text_tursti"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="#fafafa"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/ratingBar_utsikt"
+        android:layout_alignEnd="@+id/text_utsikt" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tilgjengelighet"
+        android:id="@+id/text_tilgjegelighet"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="#fafafa"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/ratingBar_tursti"
+        android:layout_alignStart="@+id/text_tursti" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/oppmerking"
+        android:id="@+id/text_oppmerking"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="#fafafa"
+        android:layout_below="@+id/ratingBar_tilgjengelighet"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp" />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="false"
+        android:id="@+id/ratingBar_oppmerking"
+        android:numStars="5"
+
+        android:stepSize="0.5"
+        android:progressBackgroundTint="#C0C0C0"
+        android:progressTint="#FFD700"
+        android:secondaryProgressTint="#000000"
+        android:layout_below="@+id/text_oppmerking"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Dette er et tekst felt 45678956789"
+        android:textColor="#fafafa"
+        android:ems="10"
+        android:layout_below="@+id/ratingBar_oppmerking"
+        android:layout_alignStart="@+id/text_tilgjegelighet"
+        android:layout_marginTop="50dp"
+        android:id="@+id/editText"
+        android:layout_alignParentEnd="true" />
+
+
+</RelativeLayout>
