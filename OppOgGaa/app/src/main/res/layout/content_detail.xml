@@ -10,6 +10,8 @@
     tools:context="com.example.prosjektfjell.oppogg.DetailActivity"
     tools:showIn="@layout/activity_detail">
 
+
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="270dp"
