@@ -3,47 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.oppoggaaserver;
+package com.mycompany.serverutogopp;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author vidar
  */
 @Entity
-@Table(name = "raiting")
+@Table(name = "rating")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Raiting.findAll", query = "SELECT r FROM Raiting r")
-    , @NamedQuery(name = "Raiting.findByRRatingId", query = "SELECT r FROM Raiting r WHERE r.rRatingId = :rRatingId")
-    , @NamedQuery(name = "Raiting.findByRRatingView", query = "SELECT r FROM Raiting r WHERE r.rRatingView = :rRatingView")
-    , @NamedQuery(name = "Raiting.findByRRatingPath", query = "SELECT r FROM Raiting r WHERE r.rRatingPath = :rRatingPath")
-    , @NamedQuery(name = "Raiting.findByRRatingAvailability", query = "SELECT r FROM Raiting r WHERE r.rRatingAvailability = :rRatingAvailability")
-    , @NamedQuery(name = "Raiting.findByRRatingMarkup", query = "SELECT r FROM Raiting r WHERE r.rRatingMarkup = :rRatingMarkup")
-    , @NamedQuery(name = "Raiting.findByRRatingTotal", query = "SELECT r FROM Raiting r WHERE r.rRatingTotal = :rRatingTotal")
-    , @NamedQuery(name = "Raiting.findByRRatingComment", query = "SELECT r FROM Raiting r WHERE r.rRatingComment = :rRatingComment")})
-public class Raiting implements Serializable {
+    @NamedQuery(name = Rating.FIND_ALL, query = "SELECT r FROM Rating r")
+    , @NamedQuery(name = "Rating.findByRRatingId", query = "SELECT r FROM Rating r WHERE r.rRatingId = :rRatingId")
+    , @NamedQuery(name = "Rating.findByRRatingView", query = "SELECT r FROM Rating r WHERE r.rRatingView = :rRatingView")
+    , @NamedQuery(name = "Rating.findByRRatingPath", query = "SELECT r FROM Rating r WHERE r.rRatingPath = :rRatingPath")
+    , @NamedQuery(name = "Rating.findByRRatingAvailability", query = "SELECT r FROM Rating r WHERE r.rRatingAvailability = :rRatingAvailability")
+    , @NamedQuery(name = "Rating.findByRRatingMarkup", query = "SELECT r FROM Rating r WHERE r.rRatingMarkup = :rRatingMarkup")
+    , @NamedQuery(name = "Rating.findByRRatingTotal", query = "SELECT r FROM Rating r WHERE r.rRatingTotal = :rRatingTotal")
+    , @NamedQuery(name = "Rating.findByRRatingComment", query = "SELECT r FROM Rating r WHERE r.rRatingComment = :rRatingComment")})
+public class Rating implements Serializable {
 
+    public static final String FIND_ALL = "Rating.findAll";
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "RRating_Id")
+    @Column(name = "RRatingId")
     private Integer rRatingId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "RRatingView")
@@ -59,13 +59,14 @@ public class Raiting implements Serializable {
     @Size(max = 300)
     @Column(name = "RRatingComment")
     private String rRatingComment;
-    @OneToMany(mappedBy = "rRatingId")
-    private Collection<Mountain> mountainCollection;
+    @JoinColumn(name = "MId", referencedColumnName = "MId")
+    @ManyToOne
+    private Mountain mId;
 
-    public Raiting() {
+    public Rating() {
     }
 
-    public Raiting(Integer rRatingId) {
+    public Rating(Integer rRatingId) {
         this.rRatingId = rRatingId;
     }
 
@@ -125,13 +126,12 @@ public class Raiting implements Serializable {
         this.rRatingComment = rRatingComment;
     }
 
-    @XmlTransient
-    public Collection<Mountain> getMountainCollection() {
-        return mountainCollection;
+    public Mountain getMId() {
+        return mId;
     }
 
-    public void setMountainCollection(Collection<Mountain> mountainCollection) {
-        this.mountainCollection = mountainCollection;
+    public void setMId(Mountain mId) {
+        this.mId = mId;
     }
 
     @Override
@@ -144,10 +144,10 @@ public class Raiting implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Raiting)) {
+        if (!(object instanceof Rating)) {
             return false;
         }
-        Raiting other = (Raiting) object;
+        Rating other = (Rating) object;
         if ((this.rRatingId == null && other.rRatingId != null) || (this.rRatingId != null && !this.rRatingId.equals(other.rRatingId))) {
             return false;
         }
@@ -156,7 +156,7 @@ public class Raiting implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.oppoggaaserver.Raiting[ rRatingId=" + rRatingId + " ]";
+        return "com.mycompany.serverutogopp.Rating[ rRatingId=" + rRatingId + " ]";
     }
     
 }

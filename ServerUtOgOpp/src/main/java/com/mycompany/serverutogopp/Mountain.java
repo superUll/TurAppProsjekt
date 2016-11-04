@@ -3,22 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.oppoggaaserver;
+package com.mycompany.serverutogopp;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -29,80 +30,78 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = Mountain.FIND_ALL_MOUNTAINS, query = "SELECT m FROM Mountain m")
-    , @NamedQuery(name = "Mountain.findByMTId", query = "SELECT m FROM Mountain m WHERE m.mTId = :mTId")
+    , @NamedQuery(name = "Mountain.findByMId", query = "SELECT m FROM Mountain m WHERE m.mId = :mId")
     , @NamedQuery(name = "Mountain.findByMThumbnail", query = "SELECT m FROM Mountain m WHERE m.mThumbnail = :mThumbnail")
     , @NamedQuery(name = "Mountain.findByMImage", query = "SELECT m FROM Mountain m WHERE m.mImage = :mImage")
     , @NamedQuery(name = "Mountain.findByMMunicipality", query = "SELECT m FROM Mountain m WHERE m.mMunicipality = :mMunicipality")
     , @NamedQuery(name = "Mountain.findByMName", query = "SELECT m FROM Mountain m WHERE m.mName = :mName")
+    , @NamedQuery(name = "Mountain.findByMPath", query = "SELECT m FROM Mountain m WHERE m.mPath = :mPath")
     , @NamedQuery(name = "Mountain.findByMHeight", query = "SELECT m FROM Mountain m WHERE m.mHeight = :mHeight")
     , @NamedQuery(name = "Mountain.findByMAltitude", query = "SELECT m FROM Mountain m WHERE m.mAltitude = :mAltitude")
     , @NamedQuery(name = "Mountain.findByMLenght", query = "SELECT m FROM Mountain m WHERE m.mLenght = :mLenght")
     , @NamedQuery(name = "Mountain.findByMTimeSpan", query = "SELECT m FROM Mountain m WHERE m.mTimeSpan = :mTimeSpan")
-    , @NamedQuery(name = "Mountain.findByMPath", query = "SELECT m FROM Mountain m WHERE m.mPath = :mPath")
     , @NamedQuery(name = "Mountain.findByMTerrain", query = "SELECT m FROM Mountain m WHERE m.mTerrain = :mTerrain")
     , @NamedQuery(name = "Mountain.findByMDifficulty", query = "SELECT m FROM Mountain m WHERE m.mDifficulty = :mDifficulty")})
 public class Mountain implements Serializable {
 
-    public static final String FIND_ALL_MOUNTAINS = "Mountain-findAll";
+    public static final String FIND_ALL_MOUNTAINS = "Mountain.findAll";
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "MT_Id")
-    private Integer mTId;
+    @Column(name = "MId")
+    private Integer mId;
     @Size(max = 100)
     @Column(name = "MThumbnail")
     private String mThumbnail;
     @Size(max = 100)
     @Column(name = "MImage")
     private String mImage;
-    @Size(max = 45)
+    @Size(max = 300)
     @Column(name = "MMunicipality")
     private String mMunicipality;
-    @Size(max = 45)
+    @Size(max = 300)
     @Column(name = "MName")
     private String mName;
-    @Size(max = 45)
-    @Column(name = "MHeight")
-    private String mHeight;
-    @Size(max = 45)
-    @Column(name = "MAltitude")
-    private String mAltitude;
-    @Size(max = 45)
-    @Column(name = "MLenght")
-    private String mLenght;
-    @Size(max = 45)
-    @Column(name = "MTimeSpan")
-    private String mTimeSpan;
-    @Size(max = 45)
+    @Size(max = 300)
     @Column(name = "MPath")
     private String mPath;
+    @Size(max = 300)
+    @Column(name = "MHeight")
+    private String mHeight;
+    @Size(max = 300)
+    @Column(name = "MAltitude")
+    private String mAltitude;
+    @Size(max = 300)
+    @Column(name = "MLenght")
+    private String mLenght;
+    @Size(max = 300)
+    @Column(name = "MTimeSpan")
+    private String mTimeSpan;
     @Size(max = 100)
     @Column(name = "MTerrain")
     private String mTerrain;
-    @Size(max = 45)
+    @Size(max = 300)
     @Column(name = "MDifficulty")
     private String mDifficulty;
-    @JoinColumn(name = "IImage_Id", referencedColumnName = "IImage_Id")
-    @ManyToOne
-    private Image iImageId;
-    @JoinColumn(name = "RRating_Id", referencedColumnName = "RRating_Id")
-    @ManyToOne
-    private Raiting rRatingId;
+    @OneToMany(mappedBy = "mId")
+    private Collection<Image> imageCollection;
+    @OneToMany(mappedBy = "mId")
+    private Collection<Rating> ratingCollection;
 
     public Mountain() {
     }
 
-    public Mountain(Integer mTId) {
-        this.mTId = mTId;
+    public Mountain(Integer mId) {
+        this.mId = mId;
     }
 
-    public Integer getMTId() {
-        return mTId;
+    public Integer getMId() {
+        return mId;
     }
 
-    public void setMTId(Integer mTId) {
-        this.mTId = mTId;
+    public void setMId(Integer mId) {
+        this.mId = mId;
     }
 
     public String getMThumbnail() {
@@ -137,6 +136,14 @@ public class Mountain implements Serializable {
         this.mName = mName;
     }
 
+    public String getMPath() {
+        return mPath;
+    }
+
+    public void setMPath(String mPath) {
+        this.mPath = mPath;
+    }
+
     public String getMHeight() {
         return mHeight;
     }
@@ -169,14 +176,6 @@ public class Mountain implements Serializable {
         this.mTimeSpan = mTimeSpan;
     }
 
-    public String getMPath() {
-        return mPath;
-    }
-
-    public void setMPath(String mPath) {
-        this.mPath = mPath;
-    }
-
     public String getMTerrain() {
         return mTerrain;
     }
@@ -193,26 +192,28 @@ public class Mountain implements Serializable {
         this.mDifficulty = mDifficulty;
     }
 
-    public Image getIImageId() {
-        return iImageId;
+    @XmlTransient
+    public Collection<Image> getImageCollection() {
+        return imageCollection;
     }
 
-    public void setIImageId(Image iImageId) {
-        this.iImageId = iImageId;
+    public void setImageCollection(Collection<Image> imageCollection) {
+        this.imageCollection = imageCollection;
     }
 
-    public Raiting getRRatingId() {
-        return rRatingId;
+    @XmlTransient
+    public Collection<Rating> getRatingCollection() {
+        return ratingCollection;
     }
 
-    public void setRRatingId(Raiting rRatingId) {
-        this.rRatingId = rRatingId;
+    public void setRatingCollection(Collection<Rating> ratingCollection) {
+        this.ratingCollection = ratingCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (mTId != null ? mTId.hashCode() : 0);
+        hash += (mId != null ? mId.hashCode() : 0);
         return hash;
     }
 
@@ -223,7 +224,7 @@ public class Mountain implements Serializable {
             return false;
         }
         Mountain other = (Mountain) object;
-        if ((this.mTId == null && other.mTId != null) || (this.mTId != null && !this.mTId.equals(other.mTId))) {
+        if ((this.mId == null && other.mId != null) || (this.mId != null && !this.mId.equals(other.mId))) {
             return false;
         }
         return true;
@@ -231,7 +232,7 @@ public class Mountain implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.oppoggaaserver.Mountain[ mTId=" + mTId + " ]";
+        return "com.mycompany.serverutogopp.Mountain[ mId=" + mId + " ]";
     }
     
 }
