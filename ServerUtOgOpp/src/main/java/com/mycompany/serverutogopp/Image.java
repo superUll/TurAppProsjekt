@@ -3,23 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.oppoggaaserver;
+package com.mycompany.serverutogopp;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,7 +39,7 @@ public class Image implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "IImage_Id")
+    @Column(name = "IImageId")
     private Integer iImageId;
     @Size(max = 100)
     @Column(name = "IName")
@@ -51,8 +50,9 @@ public class Image implements Serializable {
     @Size(max = 100)
     @Column(name = "IType")
     private String iType;
-    @OneToMany(mappedBy = "iImageId")
-    private Collection<Mountain> mountainCollection;
+    @JoinColumn(name = "MId", referencedColumnName = "MId")
+    @ManyToOne
+    private Mountain mId;
 
     public Image() {
     }
@@ -93,13 +93,12 @@ public class Image implements Serializable {
         this.iType = iType;
     }
 
-    @XmlTransient
-    public Collection<Mountain> getMountainCollection() {
-        return mountainCollection;
+    public Mountain getMId() {
+        return mId;
     }
 
-    public void setMountainCollection(Collection<Mountain> mountainCollection) {
-        this.mountainCollection = mountainCollection;
+    public void setMId(Mountain mId) {
+        this.mId = mId;
     }
 
     @Override
@@ -124,7 +123,7 @@ public class Image implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.oppoggaaserver.Image[ iImageId=" + iImageId + " ]";
+        return "com.mycompany.serverutogopp.Image[ iImageId=" + iImageId + " ]";
     }
     
 }

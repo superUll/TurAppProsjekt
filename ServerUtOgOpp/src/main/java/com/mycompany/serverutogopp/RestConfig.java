@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.oppoggaaserver;
+package com.mycompany.serverutogopp;
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
@@ -12,6 +13,6 @@ import javax.ws.rs.core.Application;
  * @author vidar
  */
 @ApplicationPath("services")
-public class RestConfig extends Application {
+public class RestConfig extends Application{
     
 }

@@ -57,6 +57,11 @@ public class RatingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //TODO send the rating values to the database and goes back to DetailActivity
+                //"RatingBarName".getRating();
+
+
+
             }
         });
 

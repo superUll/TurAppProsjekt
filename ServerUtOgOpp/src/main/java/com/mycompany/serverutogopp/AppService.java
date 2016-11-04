@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.oppoggaaserver;
+package com.mycompany.serverutogopp;
 
 import java.util.List;
 import javax.ejb.Stateless;
@@ -19,11 +19,11 @@ import javax.ws.rs.core.MediaType;
  * @author vidar
  */
 @Stateless
-@Path("cotent")
+@Path("content")
 @Produces(MediaType.APPLICATION_JSON)
-public class MountainService {
+public class AppService {
     
-    @PersistenceContext
+     @PersistenceContext
     EntityManager em;
     
     @GET
@@ -31,4 +31,12 @@ public class MountainService {
     public List<Mountain> getAllMountains(){
         return em.createNamedQuery(Mountain.FIND_ALL_MOUNTAINS, Mountain.class).getResultList();
     }
+    
+    @GET
+    @Path("rating")
+    public List<Rating> getAllRating(){
+        return em.createNamedQuery(Rating.FIND_ALL, Rating.class).getResultList();
+    }
+       
+    
 }

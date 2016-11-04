@@ -35,7 +35,7 @@ public class ContentActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     ListView listFjell;
 
-    private static String url = "http://10.0.2.2:8080/UtOgOpp/services/list/mountains";
+    private static String url = "http://83.243.149.205:8080/TurLederServer/services/content/mountains";
 
     ArrayList<HashMap<String, String>> fjellist;
     public static String getMname;
