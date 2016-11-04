@@ -113,7 +113,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:inputType="textPersonName"
-        android:text="Dette er et tekst felt 45678956789 hfhghfghfhfghfghfghfghfgh vidar"
+        android:text="Dette er et tekst "
         android:textColor="#fafafa"
         android:background="@drawable/back_com"
         android:ems="10"

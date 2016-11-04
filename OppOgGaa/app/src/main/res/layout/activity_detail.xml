@@ -8,6 +8,6 @@
     tools:context="com.example.prosjektfjell.oppogg.DetailActivity">
 
     <include layout="@layout/content_detail" />
-    <include layout="@layout/content_detail_rating"/>
+
 
 </android.support.design.widget.CoordinatorLayout>
