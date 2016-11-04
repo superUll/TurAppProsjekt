@@ -5,6 +5,7 @@
     android:id="@+id/content_rating"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context="com.example.prosjektfjell.oppogg.RatingActivity"
     tools:showIn="@layout/activity_rating"
     android:background="#1c1c1c">
@@ -112,27 +113,18 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:inputType="textPersonName"
-        android:text="Dette er et tekst "
+        android:inputType="textMultiLine"
+        android:hint="Kommentar"
+        android:textColorHint="#cccccc"
         android:textColor="#fafafa"
         android:background="@drawable/back_com"
         android:ems="10"
         android:layout_marginTop="46dp"
         android:id="@+id/editText"
         android:layout_below="@+id/ratingBar_oppmerking"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/ratingBar_oppmerking" />
 
-    <TextView
-        android:text="@string/kommentar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="#fafafa"
-        android:fontFamily="sans-serif-smallcaps"
-        android:layout_below="@+id/ratingBar_oppmerking"
-        android:layout_alignStart="@+id/text_tilgjegelighet"
-        android:layout_marginTop="26dp"
-        android:id="@+id/textView" />
 
 
 </RelativeLayout>

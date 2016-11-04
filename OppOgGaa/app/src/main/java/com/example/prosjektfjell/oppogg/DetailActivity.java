@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
 
-    TextView tHeight,totAlt,totLenght,totTime,track,shoe,grade,rating;
+    TextView tHeight,totAlt,totLenght,totTime,track,shoe,grade,detailName,rateIt;
     RatingBar rBar;
 
     @Override
@@ -29,6 +29,18 @@ public class DetailActivity extends AppCompatActivity {
         rBar = (RatingBar)findViewById(R.id.ratingTotal);
         float rate = Float.parseFloat(ContentActivity.getRate);
         rBar.setRating(rate);
+
+        detailName = (TextView)findViewById(R.id.detailMname);
+        detailName.setText(ContentActivity.getMname);
+
+        rateIt = (TextView)findViewById(R.id.textRate);
+        rateIt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this,RatingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         tHeight = (TextView)findViewById(R.id.setHeight);
         tHeight.setText(ContentActivity.getMheight);
