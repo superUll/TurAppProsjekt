@@ -17,12 +17,24 @@
         android:id="@+id/imageView2"
         android:layout_margin="2dp"
         android:layout_alignParentEnd="true" />
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingTotal"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:progressBackgroundTint="#C0C0C0"
+        android:progressTint="#FFD700"
+        android:secondaryProgressTint="#000000"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="Topphøyde"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/ratingTotal"
         android:layout_alignParentStart="true"
         android:textStyle="bold"
         android:textColor="#FFFFFF"

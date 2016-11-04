@@ -7,11 +7,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
 
-    TextView tHeight,totAlt,totLenght,totTime,track,shoe,grade;
+    TextView tHeight,totAlt,totLenght,totTime,track,shoe,grade,rating;
+    RatingBar rBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,10 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        rBar = (RatingBar)findViewById(R.id.ratingTotal);
+        float rate = Float.parseFloat(ContentActivity.getRate);
+        rBar.setRating(rate);
 
         tHeight = (TextView)findViewById(R.id.setHeight);
         tHeight.setText(ContentActivity.getMheight);

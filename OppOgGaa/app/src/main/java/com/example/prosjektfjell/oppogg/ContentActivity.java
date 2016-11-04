@@ -46,6 +46,7 @@ public class ContentActivity extends AppCompatActivity {
     public static String getMPath;
     public static String getMterrain;
     public static String getMgrade;
+    public static String getRate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,24 +94,27 @@ public class ContentActivity extends AppCompatActivity {
 
                     // looping through All mountains
                     for (int i = 0; i < jsonArr.length(); i++) {
-                        JSONObject f = jsonArr.getJSONObject(i);
+                        JSONObject r = jsonArr.getJSONObject(i);
+                        String rating = r.getString("RRatingTotal");
+
+                        JSONObject m = r.getJSONObject("rmId");
 
                         //String picture = f.getString("picture");
-                        String name = f.getString("MName");
-                        String height = f.getString("MHeight");
-                        String muni = f.getString("MMunicipality");
-                        String altitude = f.getString("MAltitude");
-                        String lenght = f.getString("MLenght");
-                        String timeSpane = f.getString("MTimeSpan");
-                        String path = f.getString("MPath");
-                        String terrain = f.getString("MTerrain");
-                        String grade = f.getString("MDifficulty");
+                        String name = m.getString("MName");
+                        String height = m.getString("MHeight");
+                        String muni = m.getString("MMunicipality");
+                        String altitude = m.getString("MAltitude");
+                        String lenght = m.getString("MLenght");
+                        String timeSpane = m.getString("MTimeSpan");
+                        String path = m.getString("MPath");
+                        String terrain = m.getString("MTerrain");
+                        String grade = m.getString("MDifficulty");
                         // tmp hash map for single mountain
                         HashMap<String, String> mountain = new HashMap<>();
 
                         // adding each child node to HashMap key => value
 
-                        // mountain.put("Picture", picture);
+                        mountain.put("rate", rating);
                         mountain.put("name",name);
                         mountain.put("height",height);
                         mountain.put("muni",muni);
@@ -180,6 +184,7 @@ public class ContentActivity extends AppCompatActivity {
                     getMtimespan = map.get("span");
                     getMterrain = map.get("terrain");
                     getMgrade = map.get("grade");
+                    getRate = map.get("rate");
 
                     Intent intent = new Intent(ContentActivity.this, DetailActivity.class);
                     startActivity(intent);
