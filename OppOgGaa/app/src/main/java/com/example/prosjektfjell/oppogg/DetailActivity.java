@@ -1,6 +1,10 @@
 package com.example.prosjektfjell.oppogg;
 
+
 import android.content.Intent;
+
+import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -42,6 +46,7 @@ public class DetailActivity extends AppCompatActivity {
         grade = (TextView)findViewById(R.id.setGrad);
         grade.setText(ContentActivity.getMgrade);
 
+
         RatingBar totRating = (RatingBar) findViewById(R.id.rating_total);
         totRating.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +57,18 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
+
+
+        String diff = grade.getText().toString();
+        if(diff.equals("Lett")) {
+            grade.setTextColor(Color.GREEN);
+        }
+        if(diff.equals("Middels")) {
+            grade.setTextColor(Color.YELLOW);
+        }
+        if(diff.equals("Vanskelig")) {
+            grade.setTextColor(Color.RED);
+        }
 
 
     }
