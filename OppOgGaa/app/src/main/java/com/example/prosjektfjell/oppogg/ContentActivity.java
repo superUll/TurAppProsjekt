@@ -46,7 +46,7 @@ public class ContentActivity extends AppCompatActivity {
     public static String getMPath;
     public static String getMterrain;
     public static String getMgrade;
-    public static String getRate;
+    public static String getID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +94,10 @@ public class ContentActivity extends AppCompatActivity {
 
                     // looping through All mountains
                     for (int i = 0; i < jsonArr.length(); i++) {
-                        JSONObject r = jsonArr.getJSONObject(i);
-                        String rating = r.getString("RRatingTotal");
-
-                        JSONObject m = r.getJSONObject("rmId");
+                        JSONObject m = jsonArr.getJSONObject(i);
 
                         //String picture = f.getString("picture");
+                        String M_ID = m.getString("MTId");
                         String name = m.getString("MName");
                         String height = m.getString("MHeight");
                         String muni = m.getString("MMunicipality");
@@ -114,7 +112,7 @@ public class ContentActivity extends AppCompatActivity {
 
                         // adding each child node to HashMap key => value
 
-                        mountain.put("rate", rating);
+                        mountain.put("id", M_ID);
                         mountain.put("name",name);
                         mountain.put("height",height);
                         mountain.put("muni",muni);
@@ -184,7 +182,7 @@ public class ContentActivity extends AppCompatActivity {
                     getMtimespan = map.get("span");
                     getMterrain = map.get("terrain");
                     getMgrade = map.get("grade");
-                    getRate = map.get("rate");
+                    getID = map.get("id");
 
                     Intent intent = new Intent(ContentActivity.this, DetailActivity.class);
                     startActivity(intent);

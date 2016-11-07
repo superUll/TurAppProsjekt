@@ -5,26 +5,29 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#aaaaaa"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.prosjektfjell.oppogg.MainActivity"
     tools:showIn="@layout/activity_main">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        app:srcCompat="@drawable/front"
-        android:id="@+id/imageView3" />
 
     <Button
         android:text="Start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/startBtn"
-        android:background="#111111"
-        android:textColor="#ffffff"
-        android:layout_alignBottom="@+id/imageView3"
+        android:background="@drawable/fields"
+        android:textColor="#aaaaaa"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="34dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        app:srcCompat="@drawable/tur2"
+        android:id="@+id/imageView3"
+        android:layout_marginBottom="44dp"
+        android:layout_above="@+id/startBtn"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
