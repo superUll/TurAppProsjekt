@@ -10,6 +10,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.POST;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -25,6 +27,7 @@ public class AppService {
     
      @PersistenceContext
     EntityManager em;
+     Rating now = new Rating();
     
     @GET
     @Path("mountains")
@@ -37,6 +40,7 @@ public class AppService {
     public List<Rating> getAllRating(){
         return em.createNamedQuery(Rating.FIND_ALL, Rating.class).getResultList();
     }
+  
        
     
 }

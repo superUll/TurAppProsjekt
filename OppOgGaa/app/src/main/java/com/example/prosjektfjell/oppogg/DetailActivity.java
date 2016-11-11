@@ -39,6 +39,7 @@ public class DetailActivity extends AppCompatActivity {
     ProgressDialog pDialog;
     ListAdapter adapter;
     String totRate;
+    public static String id;
     private static String url = "http://10.0.2.2:8080/UtOgOpp/services/content/ratings";
 
     @Override
@@ -131,7 +132,7 @@ public class DetailActivity extends AppCompatActivity {
 
                         totRate = r.getString("RRatingTotal");
                         JSONObject rmid = r.getJSONObject("rmId");
-                        String id = rmid.getString("MTId");
+                        id = rmid.getString("MTId");
 
                         if(ContentActivity.getID == id) {
                             String comment = r.getString("RRatingComment");
