@@ -15,12 +15,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.prosjektfjell.oppogg.gallery.activity.GalleryActivity;
+import com.example.prosjektfjell.oppogg.gallery.adapter.GalleryAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,13 +38,14 @@ public class DetailActivity extends AppCompatActivity {
 
     ListView listComments;
     ArrayList<HashMap<String, String>> comments;
+    ImageView imageView;
     TextView tHeight,totAlt,totLenght,totTime,track,shoe,grade,detailName,rateIt;
     RatingBar rBar;
     ProgressDialog pDialog;
     ListAdapter adapter;
     String totRate;
     public static String id;
-    private static String url = "http://10.0.2.2:8080/UtOgOpp/services/content/ratings";
+    private static String url = "http://83.243.149.205:8080/ServerUtOgOpp/services/content/ratings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,14 @@ public class DetailActivity extends AppCompatActivity {
         new GetComments().execute();
         listComments = (ListView)findViewById(R.id.commentList);
 
+        imageView = (ImageView) findViewById(R.id.detail_image);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailActivity.this, GalleryActivity.class);
+                startActivity(intent);
+            }
+        });
 
         detailName = (TextView)findViewById(R.id.detailMname);
         detailName.setText(ContentActivity.getMname);
@@ -98,6 +111,8 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
+
+
     }
     private class GetComments extends AsyncTask<Void, Void, Void> {
 
@@ -131,8 +146,8 @@ public class DetailActivity extends AppCompatActivity {
                         JSONObject r = jsonArr.getJSONObject(i);
 
                         totRate = r.getString("RRatingTotal");
-                        JSONObject rmid = r.getJSONObject("rmId");
-                        id = rmid.getString("MTId");
+                        JSONObject rmid = r.getJSONObject("MId");
+                        id = rmid.getString("MId");
 
                         if(ContentActivity.getID == id) {
                             String comment = r.getString("RRatingComment");
@@ -194,7 +209,7 @@ public class DetailActivity extends AppCompatActivity {
                     new int[]{R.id.textComment});
             listComments.setAdapter(adapter);
 
-            rBar = (RatingBar)findViewById(R.id.ratingTotal);
+            rBar = (RatingBar)findViewById(R.id.rating_total);
             float rate = Float.parseFloat(totRate);
             rBar.setRating(rate);
 
