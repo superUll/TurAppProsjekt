@@ -11,10 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.prosjektfjell.oppogg.ContentActivity;
+import com.example.prosjektfjell.oppogg.DetailActivity;
 import com.example.prosjektfjell.oppogg.R;
 import com.example.prosjektfjell.oppogg.gallery.adapter.GalleryAdapter;
 import com.example.prosjektfjell.oppogg.gallery.app.AppController;
@@ -34,6 +37,7 @@ public class GalleryActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private GalleryAdapter mAdapter;
     private RecyclerView recyclerView;
+    TextView mName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,8 @@ public class GalleryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mName = (TextView)findViewById(R.id.galleryName);
+        mName.setText(ContentActivity.getMname);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         pDialog = new ProgressDialog(this);

@@ -40,7 +40,7 @@
 
         </activity>
         <activity android:name=".gallery.activity.GalleryActivity"
-            android:label="@string/gallery"
+            android:label=""
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
