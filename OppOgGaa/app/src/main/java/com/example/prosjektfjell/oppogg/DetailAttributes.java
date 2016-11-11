@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class DetailAttributes implements Serializable {
 
     private String MThumbnail;
+    private String MId;
     private String MImage;
     private String MMunicipality;
     private String MName;
@@ -24,8 +25,9 @@ public class DetailAttributes implements Serializable {
 
     }
 
-    public DetailAttributes(String MThumbnail, String MImage, String MMunicipality, String MName, String MPath, String MHeight, String MAltitude, String MLength, String MTimespan, String MTerrain, String MDifficulty){
+    public DetailAttributes(String MThumbnail,String MId, String MImage, String MMunicipality, String MName, String MPath, String MHeight, String MAltitude, String MLength, String MTimespan, String MTerrain, String MDifficulty){
         this.MThumbnail =MThumbnail;
+        this.MId = MId;
         this.MImage = MImage;
         this.MMunicipality = MMunicipality;
         this.MName = MName;
@@ -45,6 +47,9 @@ public class DetailAttributes implements Serializable {
     public String setMThumbnails(String MThumbnail){
         return this.MThumbnail = MThumbnail;
     }
+
+    public String getMId(){ return MId;}
+    public String setMId(String MId){ return  this.MId = MId;}
 
     public String getMImage(){
         return MImage;

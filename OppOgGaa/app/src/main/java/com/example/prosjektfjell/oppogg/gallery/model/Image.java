@@ -33,11 +33,6 @@ public class Image implements Serializable{
         return this.IPath = IPath;
     }
 
-    public String getThumbnail(){
-        return MThumbnail;
-    }
-    public String setThumbnail(String MThumbnail){
-        return this.MThumbnail = MThumbnail;
-    }
+
 
 }

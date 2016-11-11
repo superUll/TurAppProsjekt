@@ -104,7 +104,8 @@ public class ContentActivity extends AppCompatActivity {
 
                         //DetailAttributes attributes  = new DetailAttributes();
                         //String SImage = attributes.setMThumbnails(m.getString("MTumbnail"));
-                        String SImage = m.getString("MThumbnail");
+                        //String SImage = m.getString("MThumbnail");
+
                         String M_ID = m.getString("MId");
                         String name = m.getString("MName");
                         String height = m.getString("MHeight");
@@ -115,12 +116,26 @@ public class ContentActivity extends AppCompatActivity {
                         String path = m.getString("MPath");
                         String terrain = m.getString("MTerrain");
                         String grade = m.getString("MDifficulty");
+
+//                          DetailAttributes attributes = new DetailAttributes();
+//                        String thumb = attributes.setMThumbnails(m.getString("MThumbnail"));
+//                        String M_ID = attributes.setMId(m.getString("MId"));
+//                        String name = attributes.setMName(m.getString("MName"));
+//                        String height = attributes.setMHeigth(m.getString("MHeight"));
+//                        String muni = attributes.setMMunicipality(m.getString("MMunicipality"));
+//                        String altitude = attributes.setMAltitide(m.getString("MAltitude"));
+//                        String lenght = attributes.setMLength(m.getString("MLenght"));
+//                        String timeSpane = attributes.setMTimespan(m.getString("MTimeSpan"));
+//                        String path = attributes.setMPath(m.getString("MPath"));
+//                        String terrain = attributes.setMTerrain(m.getString("MTerrain"));
+//                        String grade = attributes.setMDifficulty(m.getString("MDifficulty"));
+
                         // tmp hash map for single mountain
                         HashMap<String, String> mountain = new HashMap<>();
 
                         // adding each child node to HashMap key => value
                         //mountain.put("MThumbnail",thumbnail);
-                        mountain.put("thumb",SImage);
+                        // mountain.put("thumb",thumb);
                         mountain.put("id", M_ID);
                         mountain.put("name",name);
                         mountain.put("height",height);
@@ -177,8 +192,8 @@ public class ContentActivity extends AppCompatActivity {
              * */
             ListAdapter adapter = new SimpleAdapter(
                     ContentActivity.this, fjellist,
-                    R.layout.mountain_list, new String[]{"name", "height", "muni","thumb"},
-                    new int[]{R.id.mountainName, R.id.mHeight, R.id.muni, R.id.imageView4});
+                    R.layout.mountain_list, new String[]{"name", "height", "muni"},
+                    new int[]{R.id.mountainName, R.id.mHeight, R.id.muni});
             listFjell.setAdapter(adapter);
             listFjell.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
