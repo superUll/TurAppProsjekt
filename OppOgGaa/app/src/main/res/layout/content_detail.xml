@@ -18,7 +18,7 @@
 
 
 
-    <com.android.volley.toolbox.NetworkImageView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="270dp"
         app:srcCompat="@drawable/fjell2"
@@ -187,12 +187,13 @@
         android:id="@+id/setGrad" />
 
     <TextView
-        android:text="Rate It"
+        android:text="Vurder turen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detail_image"
         android:layout_alignEnd="@+id/detail_image"
         android:textColor="#ffffff"
+        android:padding="2dp"
         android:background="@drawable/fields"
         android:layout_marginEnd="21dp"
         android:layout_marginTop="18dp"
