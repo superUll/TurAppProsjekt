@@ -18,7 +18,7 @@
 
 
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:layout_width="match_parent"
         android:layout_height="270dp"
         app:srcCompat="@drawable/fjell2"
@@ -207,7 +207,7 @@
         android:layout_alignStart="@+id/setGrad"
         android:layout_below="@id/setGrad"
         android:text="Kommentarer"
-        android:id="@+id/textComment"/>
+        android:id="@+id/Comment"/>
 
 
 
@@ -216,7 +216,7 @@
         android:layout_height="200dp"
         android:id="@+id/commentList"
         android:background="@drawable/comment_field"
-        android:layout_below="@id/textComment"/>
+        android:layout_below="@id/Comment"/>
 
 
 </RelativeLayout>

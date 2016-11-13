@@ -19,10 +19,18 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.prosjektfjell.oppogg.adapter.CustomListAdapter;
+import com.example.prosjektfjell.oppogg.gallery.app.AppController;
 import com.example.prosjektfjell.oppogg.gallery.model.Image;
+import com.example.prosjektfjell.oppogg.model.Mountain;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,6 +38,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ContentActivity extends AppCompatActivity {
 
@@ -37,12 +46,12 @@ public class ContentActivity extends AppCompatActivity {
 
     //private ArrayList<Image> images;
 
-    private ProgressDialog pDialog;
+
     ListView listFjell;
 
     private static String url = "http://83.243.149.205:8080/ServerUtOgOpp/services/content/mountains";
 
-    ArrayList<HashMap<String, String>> fjellist;
+    ArrayList<HashMap<String, String>> mountainlist;
     public static String getMname;
     public static String getMheight;
     public static String getMAltidude;
@@ -50,8 +59,14 @@ public class ContentActivity extends AppCompatActivity {
     public static String getMtimespan;
     public static String getMPath;
     public static String getMterrain;
-    public static String getMgrade;
+    public static String getThumbId;
     public static String getID;
+
+    private ProgressDialog pDialog;
+    private List<Mountain> mountains = new ArrayList<Mountain>();
+    private ListView listView;
+    private CustomListAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,165 +75,110 @@ public class ContentActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fjellist = new ArrayList<>();
-       // images = new ArrayList<>();
-        new GetMountain().execute();
+        //listView = (ListView) findViewById(R.id.fjellist);
+        adapter = new CustomListAdapter(this, mountains);
 
-        listFjell = (ListView) findViewById(R.id.fjelListe);
+        listView = (ListView) findViewById(R.id.fjelListe);
         int[] colors = {0, 0xFFFFffff};
-        listFjell.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
-        listFjell.setDividerHeight(5);
+        listView.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
+        listView.setDividerHeight(5);
 
-    }
-
-    private class GetMountain extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            // Showing progress dialog
-            pDialog = new ProgressDialog(ContentActivity.this);
-            pDialog.setMessage("Please wait...");
-            pDialog.setCancelable(false);
-            pDialog.show();
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-            AddressHandler sh = new AddressHandler();
-
-            // Making a request to url
-            String jsonStr = sh.makeServiceCall(url);
-
-            Log.e(TAG, "Response from url: " + jsonStr);
-
-            if (jsonStr != null) {
-                try {
-                    JSONArray jsonArr = new JSONArray(jsonStr);
+        pDialog = new ProgressDialog(this);
+        // Showing progress dialog before making http request
+        pDialog.setMessage("Loading...");
+        pDialog.show();
 
 
-                    // looping through All mountains
-                    for (int i = 0; i < jsonArr.length(); i++) {
-                        JSONObject m = jsonArr.getJSONObject(i);
-
-                        //DetailAttributes attributes  = new DetailAttributes();
-                        //String SImage = attributes.setMThumbnails(m.getString("MTumbnail"));
-                        //String SImage = m.getString("MThumbnail");
-
-                        String M_ID = m.getString("MId");
-                        String name = m.getString("MName");
-                        String height = m.getString("MHeight");
-                        String muni = m.getString("MMunicipality");
-                        String altitude = m.getString("MAltitude");
-                        String lenght = m.getString("MLenght");
-                        String timeSpane = m.getString("MTimeSpan");
-                        String path = m.getString("MPath");
-                        String terrain = m.getString("MTerrain");
-                        String grade = m.getString("MDifficulty");
-
-//                          DetailAttributes attributes = new DetailAttributes();
-//                        String thumb = attributes.setMThumbnails(m.getString("MThumbnail"));
-//                        String M_ID = attributes.setMId(m.getString("MId"));
-//                        String name = attributes.setMName(m.getString("MName"));
-//                        String height = attributes.setMHeigth(m.getString("MHeight"));
-//                        String muni = attributes.setMMunicipality(m.getString("MMunicipality"));
-//                        String altitude = attributes.setMAltitide(m.getString("MAltitude"));
-//                        String lenght = attributes.setMLength(m.getString("MLenght"));
-//                        String timeSpane = attributes.setMTimespan(m.getString("MTimeSpan"));
-//                        String path = attributes.setMPath(m.getString("MPath"));
-//                        String terrain = attributes.setMTerrain(m.getString("MTerrain"));
-//                        String grade = attributes.setMDifficulty(m.getString("MDifficulty"));
-
-                        // tmp hash map for single mountain
-                        HashMap<String, String> mountain = new HashMap<>();
-
-                        // adding each child node to HashMap key => value
-                        //mountain.put("MThumbnail",thumbnail);
-                        // mountain.put("thumb",thumb);
-                        mountain.put("id", M_ID);
-                        mountain.put("name",name);
-                        mountain.put("height",height);
-                        mountain.put("muni",muni);
-                        mountain.put("alti",altitude);
-                        mountain.put("lenght",lenght);
-                        mountain.put("span",timeSpane);
-                        mountain.put("path",path);
-                        mountain.put("terrain",terrain);
-                        mountain.put("grade",grade);
-
-                        // adding mountain to mountain list
-                        fjellist.add(mountain);
-
-                    }
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-
-                }
-            } else {
-                Log.e(TAG, "Couldn't get json from server.");
-                runOnUiThread(new Runnable() {
+        // Creating volley request obj
+        final JsonArrayRequest mountain = new JsonArrayRequest(url,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
-                                Toast.LENGTH_LONG)
-                                .show();
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG, response.toString());
+                        hidePDialog();
+
+
+                        // Parsing json
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+
+                                JSONObject obj = response.getJSONObject(i);
+                                Mountain m = new Mountain();
+                                m.setName(obj.getString("MName"));
+                                m.setThumbnailUrl(obj.getString("MThumbnail"));
+                                m.setHeight(obj.getString("MHeight"));
+                                m.setMuni(obj.getString("MMunicipality"));
+                                m.setId(obj.getString("MId"));
+                                m.setMAltitide(obj.getString("MAltitude"));
+                                m.setMPath(obj.getString("MPath"));
+                                m.setMLength(obj.getString("MLenght"));
+                                m.setMTimespan(obj.getString("MTimeSpan"));
+                                m.setMDifficulty(obj.getString("MDifficulty"));
+                                m.setMTerrain(obj.getString("MTerrain"));
+
+
+                                // adding mountains to movies array
+                                mountains.add(m);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        // notifying list adapter about data changes
+                        // so that it renders the list view with updated data
+                        adapter.notifyDataSetChanged();
+                        listView.setAdapter(adapter);
+                       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Mountain mo = mountains.get(position);
+                                Intent intent = new Intent(ContentActivity.this, DetailActivity.class);
+                                intent.putExtra("MName", mo.getName());
+                                intent.putExtra("MHeight", mo.getHeight());
+                                intent.putExtra("MAltitude", mo.getMAltitude());
+                                intent.putExtra("MPath", mo.getMPath());
+                                intent.putExtra("MLenght", mo.getMLength());
+                                intent.putExtra("MTimeSpan", mo.getMTimespan());
+                                intent.putExtra("MTerrain", mo.getMTerrain());
+                                intent.putExtra("MDifficulty", mo.getMDifficulty());
+                                intent.putExtra("MId", mo.getId());
+                                intent.putExtra("MThumbnail", mo.getThumbnailUrl());
+                                getThumbId = mo.getThumbnailUrl();
+                                getID = mo.getId();
+                                startActivity(intent);
+
+
+                            }
+                        });
                     }
-                });
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                hidePDialog();
 
             }
+        });
 
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-            ListAdapter adapter = new SimpleAdapter(
-                    ContentActivity.this, fjellist,
-                    R.layout.mountain_list, new String[]{"name", "height", "muni"},
-                    new int[]{R.id.mountainName, R.id.mHeight, R.id.muni});
-            listFjell.setAdapter(adapter);
-            listFjell.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    HashMap<String,String> map =(HashMap<String,String>)listFjell.getItemAtPosition(position);
-                    getMname = map.get("name");
-                    getMheight = map.get("height");
-                    getMLenght = map.get("lenght");
-                    getMAltidude = map.get("alti");
-                    getMPath = map.get("path");
-                    getMtimespan = map.get("span");
-                    getMterrain = map.get("terrain");
-                    getMgrade = map.get("grade");
-                    getID = map.get("id");
-
-                    Intent intent = new Intent(ContentActivity.this, DetailActivity.class);
-                    startActivity(intent);
-
-
-                }
-            });
-
-        }
-
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(mountain);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        hidePDialog();
+    }
+
+    private void hidePDialog() {
+        if (pDialog != null) {
+            pDialog.dismiss();
+            pDialog = null;
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

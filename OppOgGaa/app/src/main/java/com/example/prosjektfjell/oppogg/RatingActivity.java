@@ -67,7 +67,7 @@ public class RatingActivity extends AppCompatActivity {
                 rateTilgjeng = ratingBarTilgjengelighet.getRating();
                 rateTotal = ((rateUtsikt + rateTursti + rateTilgjeng)/3);
                 kommentar = comment.getText().toString();
-                id = DetailActivity.id;
+                id = DetailActivity.detailMId;
                 RatingBar ratingBarTotal = (RatingBar) findViewById(R.id.rating_total);
                 ratingBarTotal.setRating(rateTotal);
                 Toast.makeText(getApplicationContext(),"SNITT" + rateTotal,Toast.LENGTH_LONG).show();

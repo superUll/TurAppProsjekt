@@ -48,7 +48,7 @@ public class GalleryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mName = (TextView)findViewById(R.id.galleryName);
-        mName.setText(ContentActivity.getMname);
+        mName.setText(DetailActivity.name);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         pDialog = new ProgressDialog(this);
