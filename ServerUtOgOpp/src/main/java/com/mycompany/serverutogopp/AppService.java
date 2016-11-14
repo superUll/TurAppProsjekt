@@ -41,6 +41,7 @@ public class AppService {
         return em.createNamedQuery(Rating.FIND_ALL, Rating.class).getResultList();
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
   
 =======
     
@@ -50,6 +51,9 @@ public class AppService {
         return em.createNamedQuery(Image.FIND_ALL_IMAGES, Image.class).getResultList();
     }
 >>>>>>> bilder
+=======
+  
+>>>>>>> origin/master
        
     
 }
