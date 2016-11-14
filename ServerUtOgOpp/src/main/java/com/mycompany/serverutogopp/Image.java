@@ -28,13 +28,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "image")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Image.findAll", query = "SELECT i FROM Image i")
+    @NamedQuery(name = Image.FIND_ALL_IMAGES, query = "SELECT i FROM Image i")
     , @NamedQuery(name = "Image.findByIImageId", query = "SELECT i FROM Image i WHERE i.iImageId = :iImageId")
+    , @NamedQuery(name = Image.FIND_BY_MOUNTAINID, query="SELECT i FROM Image i WHERE i.mId = :mId")
     , @NamedQuery(name = "Image.findByIName", query = "SELECT i FROM Image i WHERE i.iName = :iName")
     , @NamedQuery(name = "Image.findByIPath", query = "SELECT i FROM Image i WHERE i.iPath = :iPath")
     , @NamedQuery(name = "Image.findByIType", query = "SELECT i FROM Image i WHERE i.iType = :iType")})
 public class Image implements Serializable {
 
+    public static final String FIND_ALL_IMAGES = "Image.findAll";
+    public static final String FIND_BY_MOUNTAINID = "Image.findByMId";
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
