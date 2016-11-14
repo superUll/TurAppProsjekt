@@ -40,20 +40,11 @@ public class AppService {
     public List<Rating> getAllRating(){
         return em.createNamedQuery(Rating.FIND_ALL, Rating.class).getResultList();
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-  
-=======
-    
+
+   
     @GET
     @Path("images")
     public List<Image> getAllImage(){
         return em.createNamedQuery(Image.FIND_ALL_IMAGES, Image.class).getResultList();
     }
->>>>>>> bilder
-=======
-  
->>>>>>> origin/master
-       
-    
 }
