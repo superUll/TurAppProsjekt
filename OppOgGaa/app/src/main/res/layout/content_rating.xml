@@ -5,134 +5,138 @@
     android:id="@+id/content_rating"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context="com.example.prosjektfjell.oppogg.RatingActivity"
     tools:showIn="@layout/activity_rating"
-    android:background="#1c1c1c">
+    android:background="@drawable/fields">
+
 
     <TextView
+        android:text="Utsikt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/utsikt"
-        android:id="@+id/text_utsikt"
-        android:textSize="18sp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textColor="#fafafa"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tursti"
-        android:id="@+id/text_tursti"
-        android:textSize="18sp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textColor="#fafafa"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/ratingBar_utsikt"
-        android:layout_alignEnd="@+id/text_utsikt" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tilgjengelighet"
-        android:id="@+id/text_tilgjegelighet"
-        android:textSize="18sp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textColor="#fafafa"
-        android:layout_marginTop="18dp"
-        android:layout_below="@+id/ratingBar_tursti"
-        android:layout_alignStart="@+id/text_tursti" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/oppmerking"
-        android:id="@+id/text_oppmerking"
-        android:textSize="18sp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textColor="#fafafa"
-        android:layout_below="@+id/ratingBar_tilgjengelighet"
+        android:layout_alignParentTop="true"
+        android:textColor="#ffffff"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="14dp" />
+        android:layout_marginTop="66dp"
+        android:id="@+id/textUtsikt" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:isIndicator="false"
-        android:id="@+id/ratingBar_utsikt"
         android:numStars="5"
-
         android:stepSize="0.5"
-        android:progressBackgroundTint="#C0C0C0"
-        android:progressTint="#FFD700"
+        android:progressBackgroundTint="#c0c0c0"
+        android:progressTint="#ffd700"
         android:secondaryProgressTint="#000000"
-        android:layout_below="@+id/text_utsikt" />
+        android:layout_below="@+id/textUtsikt"
+        android:layout_alignParentStart="true"
+        android:id="@+id/rating_utsikt" />
+
+    <TextView
+        android:text="Tursti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rating_utsikt"
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff"
+        android:layout_marginTop="22dp"
+        android:id="@+id/textTursti" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:isIndicator="false"
-        android:id="@+id/ratingBar_tursti"
         android:numStars="5"
-
         android:stepSize="0.5"
-        android:progressBackgroundTint="#C0C0C0"
-        android:progressTint="#FFD700"
+        android:progressBackgroundTint="#c0c0c0"
+        android:progressTint="#ffd700"
         android:secondaryProgressTint="#000000"
-        android:layout_below="@+id/text_tursti"
-        android:layout_alignStart="@+id/ratingBar_utsikt" />
+        android:layout_below="@+id/textTursti"
+        android:layout_alignParentStart="true"
+        android:id="@+id/rating_tursti" />
+
+    <TextView
+        android:text="Tilgjengelighet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/rating_tursti"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="22dp"
+        android:id="@+id/textTilgjengelighet" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:isIndicator="false"
-        android:id="@+id/ratingBar_tilgjengelighet"
         android:numStars="5"
-
         android:stepSize="0.5"
-        android:progressBackgroundTint="#C0C0C0"
-        android:progressTint="#FFD700"
+        android:progressBackgroundTint="#c0c0c0"
+        android:progressTint="#ffd700"
         android:secondaryProgressTint="#000000"
-        android:layout_below="@+id/text_tilgjegelighet"
-        android:layout_alignStart="@+id/ratingBar_tursti" />
+        android:layout_below="@+id/textTilgjengelighet"
+        android:layout_alignParentStart="true"
+        android:id="@+id/rating_tilgjengelighet" />
+
+    <!--<TextView
+        android:text="Oppmerking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rating_tilgjengelighet"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="22dp"
+        android:id="@+id/textOppmerking" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:isIndicator="false"
-        android:id="@+id/ratingBar_oppmerking"
         android:numStars="5"
-
         android:stepSize="0.5"
-        android:progressBackgroundTint="#C0C0C0"
-        android:progressTint="#FFD700"
+        android:progressBackgroundTint="#c0c0c0"
+        android:progressTint="#ffd700"
         android:secondaryProgressTint="#000000"
-        android:layout_below="@+id/text_oppmerking"
-        android:layout_alignStart="@+id/ratingBar_tilgjengelighet" />
+        android:layout_below="@+id/textOppmerking"
+        android:layout_alignParentStart="true"
+        android:id="@+id/rating_oppmerking" />-->
 
     <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:inputType="textPersonName"
-        android:text="Dette er et tekst "
-        android:textColor="#fafafa"
-        android:background="@drawable/back_com"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:inputType="textMultiLine"
         android:ems="10"
-        android:layout_marginTop="46dp"
-        android:id="@+id/editText"
-        android:layout_below="@+id/ratingBar_oppmerking"
-        android:layout_alignParentStart="true" />
+        android:hint="Kommentar"
+        android:textColorHint="#aaaaaa"
+        android:textColor="#ffffff"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="62dp"
+        android:id="@+id/edit_comment" />
 
     <TextView
-        android:text="@string/kommentar"
+        android:text="Total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="#fafafa"
-        android:fontFamily="sans-serif-smallcaps"
-        android:layout_below="@+id/ratingBar_oppmerking"
-        android:layout_alignStart="@+id/text_tilgjegelighet"
-        android:layout_marginTop="26dp"
-        android:id="@+id/textView" />
+        android:textColor="#ffffff"
+        android:layout_below="@+id/rating_tilgjengelighet"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="21dp"
+        android:id="@+id/textTotal" />
 
-
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textTotal"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:isIndicator="true"
+        android:progressBackgroundTint="#c0c0c0"
+        android:progressTint="#ffd700"
+        android:secondaryProgressTint="#000000"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="9dp"
+        android:id="@+id/rating_total" />
 </RelativeLayout>
+

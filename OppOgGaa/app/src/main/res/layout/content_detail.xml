@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="20dp"
     android:background="@drawable/fields"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.prosjektfjell.oppogg.DetailActivity"
@@ -16,17 +22,17 @@
         android:layout_width="match_parent"
         android:layout_height="270dp"
         app:srcCompat="@drawable/fjell2"
-        android:id="@+id/imageView2"
+        android:id="@+id/detail_image"
         android:layout_margin="2dp"
         android:layout_alignParentEnd="true" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:isIndicator="false"
+        android:isIndicator="true"
         android:id="@+id/rating_total"
         android:numStars="5"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/detail_image"
         android:stepSize="0.5"
         android:progressBackgroundTint="#C0C0C0"
         android:progressTint="#FFD700"
@@ -180,7 +186,39 @@
         android:paddingRight="20dp"
         android:id="@+id/setGrad" />
 
+    <TextView
+        android:text="Vurder turen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detail_image"
+        android:layout_alignEnd="@+id/detail_image"
+        android:textColor="#ffffff"
+        android:padding="2dp"
+        android:background="@drawable/fields"
+        android:layout_marginEnd="21dp"
+        android:layout_marginTop="18dp"
+        android:id="@+id/textRate" />
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingLeft="5dp"
+        android:textColor="#00f"
+        android:paddingTop="15dp"
+        android:textSize="20dp"
+        android:layout_alignStart="@+id/setGrad"
+        android:layout_below="@id/setGrad"
+        android:text="Kommentarer"
+        android:id="@+id/Comment"/>
 
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/commentList"
+        android:background="@drawable/comment_field"
+        android:layout_below="@id/Comment"/>
 
 
 </RelativeLayout>
+</ScrollView>

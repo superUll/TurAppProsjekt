@@ -11,4 +11,6 @@
     <string name="total">Total</string>
     <string name="utsikt">Utsikt</string>
     <string name="kommentar">Kommentar</string>
+    <string name="gallery">Gallery</string>
+    <string name="title_activity_content2">Content2Activity</string>
 </resources>

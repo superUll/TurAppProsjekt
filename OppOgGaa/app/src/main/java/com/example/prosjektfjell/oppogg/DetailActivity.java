@@ -1,22 +1,61 @@
 package com.example.prosjektfjell.oppogg;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 
 import android.graphics.Color;
 
+import android.graphics.drawable.GradientDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
+import com.example.prosjektfjell.oppogg.gallery.activity.GalleryActivity;
+import com.example.prosjektfjell.oppogg.gallery.adapter.GalleryAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DetailActivity extends AppCompatActivity {
+    private String TAG = DetailActivity.class.getSimpleName();
 
-    TextView tHeight,totAlt,totLenght,totTime,track,shoe,grade;
+    ListView listComments;
+    ArrayList<HashMap<String, String>> comments;
+    ImageView imageView;
+    TextView tHeight,totAlt,totLenght,totTime,track,shoe,grade,detailName,rateIt;
+    String height, altitude,path,timeSpan,terrain,difficulty,mLenght;
+    RatingBar rBar;
+    ProgressDialog pDialog;
+    ListAdapter adapter;
+    String totRate;//detailId;
+    //public static String id;
+    public static String detailMId;
+    public static String name;
+    NetworkImageView img;
+    ImageLoader imageLoader;
+    private static String url = "http://83.243.149.205:8080/ServerUtOgOpp/services/content/ratings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,51 +64,184 @@ public class DetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        tHeight = (TextView)findViewById(R.id.setHeight);
-        tHeight.setText(ContentActivity.getMheight);
+        Bundle bundle = getIntent().getExtras();
+        name = bundle.getString("MName");
+        height = bundle.getString("MHeight");
+        altitude = bundle.getString("MAltitude");
+        path = bundle.getString("MPath");
+        timeSpan = bundle.getString("MTimeSpan");
+        terrain = bundle.getString("MTerrain");
+        difficulty = bundle.getString("MDifficulty");
+        mLenght = bundle.getString("MLenght");
+        detailMId = bundle.getString("MId");
 
-        totAlt = (TextView)findViewById(R.id.setHmeter);
-        totAlt.setText(ContentActivity.getMAltidude);
+        /*img = (NetworkImageView)findViewById(R.id.detail_image);
+        img.setImageUrl(ContentActivity.getThumbId,imageLoader);*/
 
-        totLenght= (TextView)findViewById(R.id.setTotal);
-        totLenght.setText(ContentActivity.getMLenght);
+        comments = new ArrayList<>();
+        new GetComments().execute();
+        listComments = (ListView)findViewById(R.id.commentList);
+        int[] colors = {0, 0xFFFFffff,0};
+        listComments.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
+        listComments.setDividerHeight(2);
+        listComments.setFocusable(false);
 
-        totTime = (TextView)findViewById(R.id.setTtid);
-        totTime.setText(ContentActivity.getMtimespan);
-
-        track = (TextView)findViewById(R.id.setSti);
-        track.setText(ContentActivity.getMPath);
-
-        shoe = (TextView)findViewById(R.id.setSko);
-        shoe.setText(ContentActivity.getMterrain);
-
-        grade = (TextView)findViewById(R.id.setGrad);
-        grade.setText(ContentActivity.getMgrade);
-
-
-        RatingBar totRating = (RatingBar) findViewById(R.id.rating_total);
-        totRating.setOnClickListener(new View.OnClickListener() {
+        imageView = (ImageView) findViewById(R.id.detail_image);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(DetailActivity.this, RatingActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailActivity.this, GalleryActivity.class);
                 startActivity(intent);
-
             }
         });
 
+        detailName = (TextView)findViewById(R.id.detailMname);
+        detailName.setText(name);
 
+        rateIt = (TextView)findViewById(R.id.textRate);
+        rateIt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this,RatingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tHeight = (TextView)findViewById(R.id.setHeight);
+        tHeight.setText(height);
+
+        totAlt = (TextView)findViewById(R.id.setHmeter);
+        totAlt.setText(altitude);
+
+        totLenght= (TextView)findViewById(R.id.setTotal);
+        totLenght.setText(mLenght);
+
+        totTime = (TextView)findViewById(R.id.setTtid);
+        totTime.setText(timeSpan);
+
+        track = (TextView)findViewById(R.id.setSti);
+        track.setText(path);
+
+        shoe = (TextView)findViewById(R.id.setSko);
+        shoe.setText(terrain);
+
+        grade = (TextView)findViewById(R.id.setGrad);
+        grade.setText(difficulty);
         String diff = grade.getText().toString();
-        if(diff.equals("Lett")) {
+        if(diff.startsWith("Lett")) {
             grade.setTextColor(Color.GREEN);
         }
-        if(diff.equals("Middels")) {
+        if(diff.startsWith("Medium")) {
             grade.setTextColor(Color.YELLOW);
         }
-        if(diff.equals("Vanskelig")) {
+        if(diff.startsWith("Vanskelig")) {
             grade.setTextColor(Color.RED);
         }
 
+
+
+
+    }
+    private class GetComments extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Showing progress dialog
+            pDialog = new ProgressDialog(DetailActivity.this);
+            pDialog.setMessage("Please wait...");
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            AddressHandler sh = new AddressHandler();
+
+            // Making a request to url
+            String jsonStr = sh.makeServiceCall(url);
+
+            Log.e(TAG, "Response from url: " + jsonStr);
+
+            if (jsonStr != null) {
+                try {
+                    JSONArray jsonArr = new JSONArray(jsonStr);
+
+
+                    // looping through All comments
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        JSONObject r = jsonArr.getJSONObject(i);
+
+
+                        totRate = r.getString("RRatingTotal");
+                        JSONObject rmid = r.getJSONObject("MId");
+                        String id = rmid.getString("MId");
+
+                        if(ContentActivity.getID == id) {
+                            String comment = r.getString("RRatingComment");
+                            // tmp hash map for single mountain
+                            HashMap<String, String> rComment = new HashMap<>();
+
+                            rComment.put("comment", comment);
+
+
+                            // adding comment to list
+                            comments.add(rComment);
+                        }
+                    }
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    });
+
+                }
+            } else {
+                Log.e(TAG, "Couldn't get json from server.");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Couldn't get json from server. Check LogCat for possible errors!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                    }
+                });
+
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            // Dismiss the progress dialog
+            if (pDialog.isShowing())
+                pDialog.dismiss();
+            /**
+             * Updating parsed JSON data into ListView
+             * */
+
+            adapter = new SimpleAdapter(
+                    DetailActivity.this, comments,
+                    R.layout.comment, new String[]{"comment"},
+                    new int[]{R.id.userComment});
+            listComments.setAdapter(adapter);
+
+            rBar = (RatingBar)findViewById(R.id.rating_total);
+            float rate = Float.parseFloat(totRate);
+            rBar.setRating(rate);
+
+
+        }
 
     }
 

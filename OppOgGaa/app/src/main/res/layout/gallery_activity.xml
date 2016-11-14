@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.prosjektfjell.oppogg.DetailActivity">
+    tools:context=".gallery.activity.GalleryActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -26,12 +26,11 @@
                 android:textSize="40dp"
                 android:textColor="#ffffff"
                 android:textStyle="bold"
-                android:id="@+id/detailMname"/>
+                android:id="@+id/galleryName"/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_detail" />
-
+    <include layout="@layout/gallery_content" />
 
 </android.support.design.widget.CoordinatorLayout>
