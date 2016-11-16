@@ -30,6 +30,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.example.prosjektfjell.oppogg.gallery.activity.GalleryActivity;
 import com.example.prosjektfjell.oppogg.gallery.adapter.GalleryAdapter;
+import com.example.prosjektfjell.oppogg.gallery.app.AppController;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,8 +54,8 @@ public class DetailActivity extends AppCompatActivity {
     //public static String id;
     public static String detailMId;
     public static String name;
-    NetworkImageView img;
-    ImageLoader imageLoader;
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
     private static String url = "http://83.243.149.205:8080/ServerUtOgOpp/services/content/ratings";
 
     @Override
@@ -75,19 +76,25 @@ public class DetailActivity extends AppCompatActivity {
         mLenght = bundle.getString("MLenght");
         detailMId = bundle.getString("MId");
 
-        /*img = (NetworkImageView)findViewById(R.id.detail_image);
-        img.setImageUrl(ContentActivity.getThumbId,imageLoader);*/
+
+        NetworkImageView img = (NetworkImageView)findViewById(R.id.detail_image);
+        if ( ContentActivity.getThumbId != null) {
+            img.setImageUrl(ContentActivity.getThumbId,imageLoader);
+        }
+        else {
+            img.setDefaultImageResId(R.drawable.fjell2);
+        }
 
         comments = new ArrayList<>();
         new GetComments().execute();
+
         listComments = (ListView)findViewById(R.id.commentList);
         int[] colors = {0, 0xFFFFffff,0};
         listComments.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
         listComments.setDividerHeight(2);
         listComments.setFocusable(false);
 
-        imageView = (ImageView) findViewById(R.id.detail_image);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetailActivity.this, GalleryActivity.class);

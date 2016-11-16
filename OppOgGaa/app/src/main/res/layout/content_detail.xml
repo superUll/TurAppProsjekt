@@ -18,7 +18,7 @@
 
 
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:layout_width="match_parent"
         android:layout_height="270dp"
         app:srcCompat="@drawable/fjell2"
