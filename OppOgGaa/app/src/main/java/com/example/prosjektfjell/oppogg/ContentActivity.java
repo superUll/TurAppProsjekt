@@ -124,6 +124,7 @@ public class ContentActivity extends AppCompatActivity  {
                                 startActivity(intent);
 
 
+
                             }
                         });
                     }
