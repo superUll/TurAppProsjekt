@@ -9,14 +9,13 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -45,16 +44,16 @@ public class DetailActivity extends AppCompatActivity {
     ListView listComments;
     ArrayList<HashMap<String, String>> comments;
     ImageView imageView;
-    TextView tHeight,totAlt,totLenght,totTime,track,shoe,grade,detailName,rateIt;
+    TextView tHeight,totAlt,totLenght,totTime,track,shoe,grade,detailName,rateIt,mapBtn;
     String height, altitude,path,timeSpan,terrain,difficulty,mLenght;
     RatingBar rBar;
     ProgressDialog pDialog;
     ListAdapter adapter;
-    String totRate;//detailId;
-    //public static String id;
+    String totRate;
     public static String detailMId;
     public static String name;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+    MapActivity mapApp;
 
     private static String url = "http://83.243.149.205:8080/ServerUtOgOpp/services/content/ratings";
 
@@ -75,6 +74,10 @@ public class DetailActivity extends AppCompatActivity {
         difficulty = bundle.getString("MDifficulty");
         mLenght = bundle.getString("MLenght");
         detailMId = bundle.getString("MId");
+
+        mapApp = new MapActivity();
+
+
 
 
         NetworkImageView img = (NetworkImageView)findViewById(R.id.detail_image);
@@ -114,6 +117,8 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+
+
         tHeight = (TextView)findViewById(R.id.setHeight);
         tHeight.setText(height);
 
@@ -144,8 +149,6 @@ public class DetailActivity extends AppCompatActivity {
         if(diff.startsWith("Vanskelig")) {
             grade.setTextColor(Color.RED);
         }
-
-
 
 
     }
@@ -251,5 +254,6 @@ public class DetailActivity extends AppCompatActivity {
         }
 
     }
+
 
 }

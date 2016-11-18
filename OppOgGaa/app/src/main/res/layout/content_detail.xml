@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -183,8 +184,39 @@
         android:layout_below="@+id/textGrad"
         android:layout_alignStart="@+id/textGrad"
         android:textColor="#ffffff"
+        android:paddingBottom="20dp"
         android:paddingRight="20dp"
         android:id="@+id/setGrad" />
+
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+
+        android:layout_below="@id/setGrad"/>
+
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:paddingLeft="5dp"
+        android:textColor="#FFFFFF"
+        android:paddingTop="15dp"
+        android:textSize="20dp"
+        android:layout_alignStart="@+id/setGrad"
+        android:layout_below="@id/map"
+        android:text="Kommentarer"
+        android:id="@+id/Comment"/>
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/commentList"
+        android:background="@drawable/comment_field"
+        android:layout_below="@id/Comment"/>
 
     <TextView
         android:text="Vurder turen"
@@ -198,26 +230,7 @@
         android:layout_marginEnd="21dp"
         android:layout_marginTop="18dp"
         android:id="@+id/textRate" />
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:paddingLeft="5dp"
-        android:textColor="#00f"
-        android:paddingTop="15dp"
-        android:textSize="20dp"
-        android:layout_alignStart="@+id/setGrad"
-        android:layout_below="@id/setGrad"
-        android:text="Kommentarer"
-        android:id="@+id/Comment"/>
 
-
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/commentList"
-        android:background="@drawable/comment_field"
-        android:layout_below="@id/Comment"/>
 
 
 </RelativeLayout>
