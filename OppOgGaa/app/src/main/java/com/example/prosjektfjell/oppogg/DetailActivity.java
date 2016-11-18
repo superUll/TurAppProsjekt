@@ -46,6 +46,7 @@ public class DetailActivity extends AppCompatActivity {
     ImageView imageView;
     TextView tHeight,totAlt,totLenght,totTime,track,shoe,grade,detailName,rateIt,mapBtn;
     String height, altitude,path,timeSpan,terrain,difficulty,mLenght;
+    String GET = "GET";
     RatingBar rBar;
     ProgressDialog pDialog;
     ListAdapter adapter;
@@ -170,18 +171,18 @@ public class DetailActivity extends AppCompatActivity {
             AddressHandler sh = new AddressHandler();
 
             // Making a request to url
-            String jsonStr = sh.makeServiceCall(url);
+            JSONArray jsonStr = sh.makeServiceCall(url, GET, comments);
 
             Log.e(TAG, "Response from url: " + jsonStr);
 
             if (jsonStr != null) {
                 try {
-                    JSONArray jsonArr = new JSONArray(jsonStr);
+                    //JSONArray jsonArr = new JSONArray(jsonStr);
 
 
                     // looping through All comments
-                    for (int i = 0; i < jsonArr.length(); i++) {
-                        JSONObject r = jsonArr.getJSONObject(i);
+                    for (int i = 0; i < jsonStr.length(); i++) {
+                        JSONObject r = jsonStr.getJSONObject(i);
 
 
                         totRate = r.getString("RRatingTotal");

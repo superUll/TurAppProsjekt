@@ -17,33 +17,33 @@ public class AddressHandlerPost {
 
 
 
-//    private static final String TAG = AddressHandlerPost.class.getSimpleName();
-//
-//    public AddressHandlerPost(){
-//
-//    }
-//
-//    public String makePostCall(String reqURL){
-//
-//        String request = null;
-//        try{
-//            URL url = new URL(reqURL);
-//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//            conn.setRequestMethod("POST");
-//            conn.setDoOutput(true);
-//            DataOutputStream dStream = new DataOutputStream(conn.getOutputStream());
-//            dStream.writeBytes(request);
-//
-//
-//
-//
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return request;
-//    }
+    private static final String TAG = AddressHandlerPost.class.getSimpleName();
+
+    public AddressHandlerPost(){
+
+    }
+
+    public String makePostCall(String reqURL){
+
+        String request = null;
+        try{
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            DataOutputStream dStream = new DataOutputStream(conn.getOutputStream());
+            dStream.writeBytes(request);
+
+
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return request;
+    }
 
 }
