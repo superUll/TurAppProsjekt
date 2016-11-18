@@ -37,7 +37,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap map) {
         map.addMarker(new MarkerOptions()
-                .position(new LatLng(62.146, 6.07108))
+                .position(new LatLng(62.1327800,6.0886100 ))
                 .title("Marker"));
 
     }

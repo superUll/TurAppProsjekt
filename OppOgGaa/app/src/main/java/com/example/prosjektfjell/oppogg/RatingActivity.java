@@ -99,10 +99,10 @@ public class RatingActivity extends AppCompatActivity {
             String jsonStr = sh.makePostCall(url);
 
             Log.e(TAG, "Response from url: " + jsonStr);*/
-            String jsonStr = sh.makePostCall(url);
+            //String jsonStr = sh.makePostCall(url);
 
 
-            rate = String.valueOf(rateTotal);
+          /*  rate = String.valueOf(rateTotal);
             rating = new HashMap<String, String>();
             rating.put("RRatingTotal", rate);
             rating.put("RRatongComment", kommentar);
@@ -111,7 +111,7 @@ public class RatingActivity extends AppCompatActivity {
 
 
 
-
+*/
             return null;
         }
 
