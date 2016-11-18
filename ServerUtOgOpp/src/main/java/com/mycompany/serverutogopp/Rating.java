@@ -41,8 +41,7 @@ public class Rating implements Serializable {
     public static final String FIND_ALL = "Rating.findAll";
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    @GeneratedValue
     @Column(name = "RRatingId")
     private Integer rRatingId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

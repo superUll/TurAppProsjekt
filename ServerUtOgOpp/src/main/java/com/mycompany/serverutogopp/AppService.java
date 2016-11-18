@@ -5,16 +5,21 @@
  */
 package com.mycompany.serverutogopp;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -47,4 +52,45 @@ public class AppService {
     public List<Image> getAllImage(){
         return em.createNamedQuery(Image.FIND_ALL_IMAGES, Image.class).getResultList();
     }
+    
+    @POST
+    @Path("setrating")
+    @Consumes(MediaType.APPLICATION_JSON)   
+    public void setRating(Rating rating){
+        em.persist(rating);
+    }
+    
+    @POST
+    @Path("setrating")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response setRating(InputStream incomingData){
+       StringBuilder builder = new StringBuilder();
+       try{
+           BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(incomingData));
+           String line = null;
+           while((line= bufferedReader.readLine()) != null){
+           builder.append(line);
+       }
+           
+       }catch (Exception e) {
+           System.out.println("Error Parsing: - ");
+        }
+        System.out.println("Data Received: " + builder.toString());
+        
+        //return HTTP response 200 in case of success
+        
+        
+        return Response.status(200).entity(builder.toString()).build();
+    }
+    
+    @GET
+	@Path("verify")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response verifyRESTService(InputStream incomingData) {
+		String result = "CrunchifyRESTService Successfully started..";
+
+		// return HTTP response 200 in case of success
+		return Response.status(200).entity(result).build();
+	}
+    
 }
