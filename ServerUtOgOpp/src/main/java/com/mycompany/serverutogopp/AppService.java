@@ -60,7 +60,7 @@ public class AppService {
         em.persist(rating);
     }
     
-    @POST
+    /*@POST
     @Path("setrating")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response setRating(InputStream incomingData){
@@ -81,16 +81,6 @@ public class AppService {
         
         
         return Response.status(200).entity(builder.toString()).build();
-    }
-    
-    @GET
-	@Path("verify")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response verifyRESTService(InputStream incomingData) {
-		String result = "CrunchifyRESTService Successfully started..";
-
-		// return HTTP response 200 in case of success
-		return Response.status(200).entity(result).build();
-	}
-    
+    }*/
+   
 }
