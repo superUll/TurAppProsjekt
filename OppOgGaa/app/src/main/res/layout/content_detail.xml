@@ -188,14 +188,43 @@
         android:paddingRight="20dp"
         android:id="@+id/setGrad" />
 
+    <RadioGroup
+        android:id="@+id/rg_views"
+        android:orientation="horizontal"
+        android:layout_below="@id/setGrad"
+        android:background="#b3b3b3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_rb_normal"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/rb_satellite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_rb_satellite" />
+
+        <RadioButton
+            android:id="@+id/rb_terrain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_rb_terrain" />
+
+    </RadioGroup>
+
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:name="com.google.android.gms.maps.MapFragment"
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-
-        android:layout_below="@id/setGrad"/>
+        android:layout_below="@id/rg_views" />
 
 
     <TextView
@@ -219,17 +248,32 @@
         android:layout_below="@id/Comment"/>
 
     <TextView
-        android:text="Vurder turen"
+    android:text="Vurder turen"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/detail_image"
+    android:layout_alignEnd="@+id/detail_image"
+    android:textColor="#ffffff"
+    android:padding="5dp"
+    android:background="@drawable/fields"
+    android:layout_marginEnd="21dp"
+    android:layout_marginTop="18dp"
+    android:id="@+id/textRate" />
+
+    <TextView
+        android:text="Kart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/detail_image"
+        android:layout_below="@+id/textRate"
         android:layout_alignEnd="@+id/detail_image"
         android:textColor="#ffffff"
-        android:padding="2dp"
+        android:padding="5dp"
+        android:textAlignment="center"
         android:background="@drawable/fields"
         android:layout_marginEnd="21dp"
         android:layout_marginTop="18dp"
-        android:id="@+id/textRate" />
+        android:id="@+id/kart"
+        android:layout_alignStart="@+id/textRate" />
 
 
 

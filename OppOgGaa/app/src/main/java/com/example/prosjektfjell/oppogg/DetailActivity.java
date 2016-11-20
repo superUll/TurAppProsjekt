@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -30,6 +31,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.prosjektfjell.oppogg.gallery.activity.GalleryActivity;
 import com.example.prosjektfjell.oppogg.gallery.adapter.GalleryAdapter;
 import com.example.prosjektfjell.oppogg.gallery.app.AppController;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +46,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements OnMapReadyCallback {
     private String TAG = DetailActivity.class.getSimpleName();
 
     ListView listComments;
@@ -58,6 +66,12 @@ public class DetailActivity extends AppCompatActivity {
 
     private static String url = "http://83.243.149.205:8080/ServerUtOgOpp/services/content/ratings";
 
+    MapFragment mapFragment;
+    LatLng latLing;
+    TextView mName;
+    GoogleMap googleMap;
+    RadioGroup rgViews;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +90,15 @@ public class DetailActivity extends AppCompatActivity {
         mLenght = bundle.getString("MLenght");
         detailMId = bundle.getString("MId");
 
-        mapApp = new MapActivity();
+        mName = (TextView)findViewById(R.id.detailMname);
+        mName.setText(DetailActivity.name);
 
+        mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        rgViews = (RadioGroup) findViewById(R.id.rg_views);
 
-
+        //mapApp = new MapActivity();
 
         NetworkImageView img = (NetworkImageView)findViewById(R.id.detail_image);
         if ( ContentActivity.getThumbId != null) {
@@ -114,6 +133,14 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailActivity.this,RatingActivity.class);
+                startActivity(intent);
+            }
+        });
+        mapBtn = (TextView)findViewById(R.id.kart);
+        mapBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this,MapActivity.class);
                 startActivity(intent);
             }
         });
@@ -153,6 +180,41 @@ public class DetailActivity extends AppCompatActivity {
 
 
     }
+    @Override
+    public void onMapReady(final GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(62.1327800,6.0886100 ))
+                .title("new Marker"));
+                //.icon(BitmapDescriptorFactory.fromResource(R.drawable.pinesmall)));
+        latLing = new LatLng(62.1327800,6.0886100 );
+       /* map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentlocation, 16));
+        map.setMaxZoomPreference(0.5f);
+        map.setMinZoomPreference(5.0f);*/
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLing,13));
+        rgViews.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.rb_normal){
+                    googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                }else if(checkedId == R.id.rb_satellite){
+                    googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                }else if(checkedId == R.id.rb_terrain){
+                    googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        try {
+            super.startActivityForResult(intent, requestCode);
+        } catch (Exception ignored){}
+    }
+
+
     private class GetComments extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -172,18 +234,13 @@ public class DetailActivity extends AppCompatActivity {
 
             // Making a request to url
             JSONArray jsonStr = sh.makeServiceCall(url, GET, comments);
-
             Log.e(TAG, "Response from url: " + jsonStr);
-
             if (jsonStr != null) {
                 try {
-                    //JSONArray jsonArr = new JSONArray(jsonStr);
-
 
                     // looping through All comments
                     for (int i = 0; i < jsonStr.length(); i++) {
                         JSONObject r = jsonStr.getJSONObject(i);
-
 
                         totRate = r.getString("RRatingTotal");
                         JSONObject rmid = r.getJSONObject("MId");
@@ -193,10 +250,7 @@ public class DetailActivity extends AppCompatActivity {
                             String comment = r.getString("RRatingComment");
                             // tmp hash map for single mountain
                             HashMap<String, String> rComment = new HashMap<>();
-
                             rComment.put("comment", comment);
-
-
                             // adding comment to list
                             comments.add(rComment);
                         }

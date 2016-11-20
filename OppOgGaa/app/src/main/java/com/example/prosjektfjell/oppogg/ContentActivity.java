@@ -65,7 +65,6 @@ public class ContentActivity extends AppCompatActivity  {
         pDialog.setMessage("Loading...");
         pDialog.show();
 
-
         // Creating volley request obj
         final JsonArrayRequest mountain = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
@@ -96,15 +95,11 @@ public class ContentActivity extends AppCompatActivity  {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
                         }
-
                         adapter.notifyDataSetChanged();
                         listView.setAdapter(adapter);
 
-
-
-                       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 Mountain mo = mountains.get(position);
@@ -123,8 +118,6 @@ public class ContentActivity extends AppCompatActivity  {
                                 getID = mo.getId();
                                 startActivity(intent);
 
-
-
                             }
                         });
                     }
@@ -141,21 +134,17 @@ public class ContentActivity extends AppCompatActivity  {
         AppController.getInstance().addToRequestQueue(mountain);
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         hidePDialog();
     }
-
     private void hidePDialog() {
         if (pDialog != null) {
             pDialog.dismiss();
             pDialog = null;
         }
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
