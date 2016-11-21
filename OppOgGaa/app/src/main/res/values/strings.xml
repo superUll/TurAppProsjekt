@@ -15,4 +15,5 @@
     <string name="str_rb_normal">Normal</string>
     <string name="str_rb_satellite">Satellitt</string>
     <string name="str_rb_terrain">Terreng</string>
+    <string name="str_rb_full_size">Full størrelse</string>
 </resources>

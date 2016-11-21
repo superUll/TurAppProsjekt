@@ -201,6 +201,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
                     googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                 }else if(checkedId == R.id.rb_terrain){
                     googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                }else if(checkedId == R.id.rb_full_size){
+                    Intent intent = new Intent(DetailActivity.this,MapActivity.class);
+                    startActivity(intent);
                 }
             }
         });

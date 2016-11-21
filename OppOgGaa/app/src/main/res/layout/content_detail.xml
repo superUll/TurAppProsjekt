@@ -192,7 +192,7 @@
         android:id="@+id/rg_views"
         android:orientation="horizontal"
         android:layout_below="@id/setGrad"
-        android:background="#b3b3b3"
+        android:background="@drawable/fields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal">
@@ -201,6 +201,9 @@
             android:id="@+id/rb_normal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:buttonTint="#ffffff"
+            android:textColor="#ffffff"
             android:text="@string/str_rb_normal"
             android:checked="true" />
 
@@ -208,13 +211,26 @@
             android:id="@+id/rb_satellite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:buttonTint="#ffffff"
+            android:textColor="#ffffff"
             android:text="@string/str_rb_satellite" />
 
         <RadioButton
             android:id="@+id/rb_terrain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="#ffffff"
+            android:textColor="#ffffff"
+            android:layout_marginRight="15dp"
             android:text="@string/str_rb_terrain" />
+        <RadioButton
+            android:id="@+id/rb_full_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#ffffff"
+            android:textColor="#ffffff"
+            android:text="@string/str_rb_full_size" />
 
     </RadioGroup>
 

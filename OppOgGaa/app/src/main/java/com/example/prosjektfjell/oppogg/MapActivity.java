@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import static com.example.prosjektfjell.oppogg.R.drawable.map;
+
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 

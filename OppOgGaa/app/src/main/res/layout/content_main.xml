@@ -5,18 +5,19 @@
     android:id="@+id/content_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#aaaaaa"
+    android:background="#ffffff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.prosjektfjell.oppogg.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <Button
-        android:text="Start"
+        android:text="Sett i Gang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/startBtn"
-        android:background="@drawable/fields"
-        android:textColor="#aaaaaa"
+        android:background="#1a3300"
+        android:padding="15dp"
+        android:textColor="#ffffff"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="34dp" />
@@ -24,7 +25,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        app:srcCompat="@drawable/tur2"
+        app:srcCompat="@drawable/front"
         android:id="@+id/imageView3"
         android:layout_marginBottom="44dp"
         android:layout_above="@+id/startBtn"
