@@ -2,27 +2,20 @@ package com.example.prosjektfjell.oppogg;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.jar.JarEntry;
-
-import static com.google.android.gms.plus.PlusOneDummyView.TAG;
 
 
 /**
@@ -38,70 +31,91 @@ public class AddressHandlerPost {
     private DataOutputStream dataOutputStream;
     private StringBuilder result;
     private URL urlObj;
-    private JSONArray jsonArray = null;
+    private JSONObject jsonObject = null;
     private StringBuilder stringBuilder;
     private String paramsString;
 
 
-    public AddressHandlerPost() {
-    }
+    public JSONObject makeHttpRequest(String url, String method,HashMap<String, String> params) {
 
-    public String makePostCall(String... params) {
-        String JsonResponse = null;
-        String JsonDATA = params[0];
+        stringBuilder = new StringBuilder();
+        int i = 0;
+        for (String key : params.keySet()) {
+            try {
+                if (i != 0) {
+                    stringBuilder.append("&");
+                }
 
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
+                stringBuilder.append(key).append("=")
+                        .append(URLEncoder.encode(params.get(key), charset));
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+
+
+        if (method.equals("POST")) {
+            // request method is POST
+            try {
+
+                urlObj = new URL(url);
+
+                httpURLConnection = (HttpURLConnection) urlObj.openConnection();
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Accept-Charset", charset);
+                httpURLConnection.setReadTimeout(10000);
+                httpURLConnection.setConnectTimeout(15000);
+                httpURLConnection.connect();
+
+                paramsString = stringBuilder.toString();
+
+                dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
+                dataOutputStream.writeBytes(paramsString);
+                dataOutputStream.flush();
+                dataOutputStream.close();
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
         try {
-            URL url = new URL("http://10.0.2.2:8080/UtOgOpp/services/content/getratings");
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setDoOutput(true);
-            // is output buffer writter
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("Accept", "application/json");
-//set headers and method
-            Writer writer = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream(), "UTF-8"));
-            writer.write(JsonDATA);
-// json data
-            writer.close();
-            InputStream inputStream = urlConnection.getInputStream();
-//input stream
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                // Nothing to do.
-                return null;
-            }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
+            //Receive the response from the server
+            InputStream in = new BufferedInputStream(httpURLConnection.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-            String inputLine;
-            while ((inputLine = reader.readLine()) != null)
-                buffer.append(inputLine + "\n");
-            if (buffer.length() == 0) {
-                // Stream was empty. No point in parsing.
-                return null;
+            result = new StringBuilder();
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
             }
-            JsonResponse = buffer.toString();
-//response data
-            Log.i(TAG, JsonResponse);
-            //send to post execute
-            return JsonResponse;
+
+            Log.d("JSON Parser", "result: " + result.toString());
+
 
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e(TAG, "Error closing stream", e);
-                }
-            }
         }
-        return null;
+
+
+        httpURLConnection.disconnect();
+
+        // try parse the string to a JSON object
+        try {
+
+            jsonObject = new JSONObject(result.toString());
+
+        } catch (JSONException e) {
+            Log.e("JSON Parser", "Error parsing data " + e.toString());
+        }
+        // return JSON Object
+        return jsonObject;
 
     }
 }

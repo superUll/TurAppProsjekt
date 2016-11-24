@@ -44,14 +44,16 @@ public class RatingActivity extends AppCompatActivity {
     EditText comment;
     ProgressDialog pDialog;
     float rateUtsikt, rateTursti, rateTilgjeng, rateTotal;
-    String getComment, kommentar, id, finalRate;
+    String getComment, kommentar, id, finalRate, rate;
     private int success = 0;
-    Rating rating;
+    HashMap<String, String> ratingHash;
+
     String POST = "POST";
     ArrayList<HashMap<String, String>> userRate;
+    AddressHandlerPost sh = new AddressHandlerPost();
 
-    private String url = "http://10.0.2.2:8080/UtOgOpp/services/content/getratings";
-
+    //private String url = "http://10.0.2.2:8080/UtOgOpp/services/content/getratings";
+    private String url = "http://83.243.149.205/post.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,10 +109,8 @@ public class RatingActivity extends AppCompatActivity {
         });
     }
 
-    private class postRatings extends AsyncTask<Void,Void,Void> {
+    private class postRatings extends AsyncTask<String,String,JSONObject> {
 
-        String response = "";
-        HashMap<String, String> rating;
 
         @Override
         protected void onPreExecute() {
@@ -124,18 +124,40 @@ public class RatingActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Void... voids) {
-            return null;
+        protected JSONObject doInBackground(String... arg) {
+            try{
+            rate = String.valueOf(rateTotal);
+            ratingHash = new HashMap<>();
+            ratingHash.put("RRatingTotal", rate);
+            ratingHash.put("RRatingComment", kommentar);
+            ratingHash.put("MId", id);
+
+            Log.d("request", "starting " + rate);
+
+            JSONObject jsonStr = sh.makeHttpRequest(url, POST, ratingHash);
+
+
+
+            if (jsonStr != null) {
+                Log.d("JSON result: ", jsonStr.toString());
+            }
+
+
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(JSONObject result) {
             super.onPostExecute(result);
             // Dismiss the progress dialog
-            if (pDialog.isShowing())
+            if (pDialog != null && pDialog.isShowing()) {
                 pDialog.dismiss();
-            if (success == 1) {
-                Toast.makeText(getApplicationContext(), "Rating Added successfully..!", Toast.LENGTH_LONG).show();
+                Toast.makeText(RatingActivity.this, "Grats mate!", Toast.LENGTH_LONG).show();
             }
 
 
