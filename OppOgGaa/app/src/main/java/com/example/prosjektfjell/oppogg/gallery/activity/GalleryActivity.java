@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.prosjektfjell.oppogg.ContentActivity;
 import com.example.prosjektfjell.oppogg.DetailActivity;
 import com.example.prosjektfjell.oppogg.R;
 import com.example.prosjektfjell.oppogg.gallery.adapter.GalleryAdapter;
@@ -28,6 +27,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+/**
+ * Downloads the Volley Http request
+ * Parse the json and add the models to array list
+ * Pass the array list to recyclerView adapter class
+ */
 
 public class GalleryActivity extends AppCompatActivity {
 
@@ -82,6 +87,7 @@ public class GalleryActivity extends AppCompatActivity {
         fetchImages();
     }
 
+    //download the json my makeing a volley http request.
     private void fetchImages() {
 
         pDialog.setMessage("Downloading json...");

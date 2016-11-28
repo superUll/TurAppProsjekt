@@ -2,13 +2,12 @@ package com.example.prosjektfjell.oppogg.adapter;
 
 /**
  * Created by oleandreheggdal on 12.11.2016.
+ * Provides access to the data.
+ * The adapter is also responsible for making a View for each item in the data set
  */
-
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Movie;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,10 @@ import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.example.prosjektfjell.oppogg.R;
-
 import com.example.prosjektfjell.oppogg.gallery.app.AppController;
 import com.example.prosjektfjell.oppogg.model.Mountain;
+
+import java.util.List;
 
 
 public class CustomListAdapter extends BaseAdapter {

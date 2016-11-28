@@ -18,6 +18,9 @@ import java.util.List;
 import com.example.prosjektfjell.oppogg.R;
 import com.example.prosjektfjell.oppogg.gallery.model.Image;
 
+/**
+ * A adapter class which inflates the gallery_thumbnail.xml and renders the image in recyclerView
+ */
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHolder> {
 

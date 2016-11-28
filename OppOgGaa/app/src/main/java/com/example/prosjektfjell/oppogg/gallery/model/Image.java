@@ -7,16 +7,16 @@ public class Image implements Serializable{
 
     private String IName;
     private String IPath;
-    private String MThumbnail;
+
 
     public Image(){
 
     }
 
-    public Image(String IName, String IPath, String MThumbnail){
+    public Image(String IName, String IPath){
         this.IName = IName;
         this.IPath = IPath;
-        this.MThumbnail = MThumbnail;
+
     }
 
     public String getName(){

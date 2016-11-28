@@ -2,30 +2,35 @@ package com.example.prosjektfjell.oppogg;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+
+/**
+ * Welcome screen. sends the user to the ContentActivity class. Will provide more functions later.
+ */
 
 public class MainActivity extends AppCompatActivity {
 
+    // Declaring of button
     Button startBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // set the layout of the MainActivity
         setContentView(R.layout.activity_main);
 
-
+        // Finds the button in the xml file and makes a instance of it.
         startBtn = (Button)findViewById(R.id.startBtn);
+        // onClickListener that will listen for a click on the button.
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                // New Intent is created, that is used to start a new Activity. The ContentActivity
                 Intent intent = new Intent(MainActivity.this, ContentActivity.class);
                 startActivity(intent);
 

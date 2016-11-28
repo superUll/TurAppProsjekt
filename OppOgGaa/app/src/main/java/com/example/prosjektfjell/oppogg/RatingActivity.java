@@ -1,13 +1,9 @@
 package com.example.prosjektfjell.oppogg;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,26 +12,15 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
-import com.example.prosjektfjell.oppogg.model.Rating;
-import com.google.android.gms.plus.model.people.Person;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.android.volley.Request.Method.POST;
+/**
+ * Rate and comment on current mountain.
+ * Get the average of the rating
+ */
 
 public class RatingActivity extends AppCompatActivity {
     private String TAG = RatingActivity.class.getSimpleName();
@@ -52,7 +37,7 @@ public class RatingActivity extends AppCompatActivity {
     ArrayList<HashMap<String, String>> userRate;
     AddressHandlerPost sh = new AddressHandlerPost();
 
-    //private String url = "http://10.0.2.2:8080/UtOgOpp/services/content/getratings";
+    //private String url = "http://83.243.149.205:8080/ServerUtOgOpp/services/content/setrating";
     private String url = "http://83.243.149.205/post.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +48,7 @@ public class RatingActivity extends AppCompatActivity {
 
         comment = (EditText) findViewById(R.id.edit_comment);
 
+        //set rating on rating bar
         final RatingBar ratingBarUtsikt = (RatingBar) findViewById(R.id.rating_utsikt);
         ratingBarUtsikt.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -87,6 +73,7 @@ public class RatingActivity extends AppCompatActivity {
             }
         });
 
+        //Get the average of the ratings, and the comment for the current mountain and send it as an JSON
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,6 +96,7 @@ public class RatingActivity extends AppCompatActivity {
         });
     }
 
+    //Get Values from variables and put them in a HashMap.
     private class postRatings extends AsyncTask<String,String,JSONObject> {
 
 
@@ -135,7 +123,6 @@ public class RatingActivity extends AppCompatActivity {
             Log.d("request", "starting " + rate);
 
             JSONObject jsonStr = sh.makeHttpRequest(url, POST, ratingHash);
-
 
 
             if (jsonStr != null) {

@@ -1,47 +1,57 @@
 package com.example.prosjektfjell.oppogg;
 
 import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.app.SearchableInfo;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+
 import com.example.prosjektfjell.oppogg.adapter.CustomListAdapter;
 import com.example.prosjektfjell.oppogg.gallery.app.AppController;
 import com.example.prosjektfjell.oppogg.model.Mountain;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  Uses Volly to get all the mountains with a thumbnail and som basic information into a ArrayList
+ *  and show it in a ListView.
+ */
+
 public class ContentActivity extends AppCompatActivity  {
 
+    // gets a simple name of the underlying class. "ContentActivity"
     private String TAG = ContentActivity.class.getSimpleName();
     public static String getThumbId;
     public static String getID;
+
+    // ProgressDialog that will show a progress bar when the JSON is loading
     private ProgressDialog pDialog;
-    private List<Mountain> mountains = new ArrayList<Mountain>();
+    private List<Mountain> mountains = new ArrayList<>();
     private ListView listView;
     private CustomListAdapter adapter;
     EditText search;
+    // URL where the JSON is
     private static String url = "http://83.243.149.205:8080/ServerUtOgOpp/services/content/mountains";
 
     @Override
@@ -52,8 +62,10 @@ public class ContentActivity extends AppCompatActivity  {
         setSupportActionBar(toolbar);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        // Create an instance of the CustomListAdapter
         adapter = new CustomListAdapter(this, mountains);
         listView = (ListView) findViewById(R.id.fjelListe);
+        // set color of divider in the ListView and fade it out to the right.
         int[] colors = {0, 0xFFFFffff};
         listView.setDivider(new GradientDrawable(GradientDrawable.Orientation.RIGHT_LEFT, colors));
         listView.setDividerHeight(5);
@@ -65,18 +77,18 @@ public class ContentActivity extends AppCompatActivity  {
         pDialog.setMessage("Loading...");
         pDialog.show();
 
-        // Creating volley request obj
-        final JsonArrayRequest mountain = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
+        // Creating volley request object
+        final JsonArrayRequest mountain = new JsonArrayRequest(url,new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(TAG, response.toString());
                         hidePDialog();
-
+                        // look through the JSONArray
                         for (int i = 0; i < response.length(); i++) {
                             try {
 
                                 JSONObject obj = response.getJSONObject(i);
+                                //new instance of Mountain class. Use the methods to set the new values
                                 Mountain m = new Mountain();
                                 m.setName(obj.getString("MName"));
                                 m.setThumbnailUrl(obj.getString("MThumbnail"));
@@ -90,15 +102,16 @@ public class ContentActivity extends AppCompatActivity  {
                                 m.setMDifficulty(obj.getString("MDifficulty"));
                                 m.setMTerrain(obj.getString("MTerrain"));
 
+                                //Adds all the mountain objects into an arrayList
                                 mountains.add(m);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-                        adapter.notifyDataSetChanged();
+                        //adapter.notifyDataSetChanged();
                         listView.setAdapter(adapter);
-
+                        // Clicking on a listed item will stores the item in a Intent
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -114,6 +127,7 @@ public class ContentActivity extends AppCompatActivity  {
                                 intent.putExtra("MDifficulty", mo.getMDifficulty());
                                 intent.putExtra("MId", mo.getId());
                                 intent.putExtra("MThumbnail", mo.getThumbnailUrl());
+                                //stored in a static variable
                                 getThumbId = mo.getThumbnailUrl();
                                 getID = mo.getId();
                                 startActivity(intent);

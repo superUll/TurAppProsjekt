@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import com.example.prosjektfjell.oppogg.R;
 import com.example.prosjektfjell.oppogg.gallery.model.Image;
 
+/**
+ * Fragment class which extends DialogFragment
+ */
 public class SlideshowDialogFragment extends DialogFragment {
     private String TAG = SlideshowDialogFragment.class.getSimpleName();
     private ArrayList<Image> images;

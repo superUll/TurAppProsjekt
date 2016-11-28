@@ -3,19 +3,14 @@ package com.example.prosjektfjell.oppogg;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-
 import android.graphics.Color;
-
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -27,15 +22,12 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
 import com.example.prosjektfjell.oppogg.gallery.activity.GalleryActivity;
-import com.example.prosjektfjell.oppogg.gallery.adapter.GalleryAdapter;
 import com.example.prosjektfjell.oppogg.gallery.app.AppController;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -45,6 +37,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+/**
+ * Gets mountain attributes and show them
+ */
 
 public class DetailActivity extends AppCompatActivity implements OnMapReadyCallback {
     private String TAG = DetailActivity.class.getSimpleName();
@@ -61,6 +57,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
     String totRate;
     public static String detailMId;
     public static String name;
+    //Singleton class in which we initialize the volley’s core objects.
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     MapActivity mapApp;
 
@@ -79,6 +76,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Instance of bundle to get the values that was stored in the Intent
         Bundle bundle = getIntent().getExtras();
         name = bundle.getString("MName");
         height = bundle.getString("MHeight");
@@ -93,13 +91,16 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         mName = (TextView)findViewById(R.id.detailMname);
         mName.setText(DetailActivity.name);
 
+        //sett fragment that are adjacent to the xml file
         mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        //Map buttons
         rgViews = (RadioGroup) findViewById(R.id.rg_views);
 
         //mapApp = new MapActivity();
 
+        //Get and sets the images into the NetworkImageView
         NetworkImageView img = (NetworkImageView)findViewById(R.id.detail_image);
         if ( ContentActivity.getThumbId != null) {
             img.setImageUrl(ContentActivity.getThumbId,imageLoader);
@@ -107,8 +108,9 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         else {
             img.setDefaultImageResId(R.drawable.fjell2);
         }
-
+        // instance of ArrayList
         comments = new ArrayList<>();
+        //execute the GetCommand class
         new GetComments().execute();
 
         listComments = (ListView)findViewById(R.id.commentList);
@@ -117,6 +119,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         listComments.setDividerHeight(2);
         listComments.setFocusable(false);
 
+        //Listener on top image. goes to gallery
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +132,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         detailName.setText(name);
 
         rateIt = (TextView)findViewById(R.id.textRate);
+        //Listener on rating textView. Goes to RatingActivity
         rateIt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,14 +140,14 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
                 startActivity(intent);
             }
         });
-        mapBtn = (TextView)findViewById(R.id.kart);
-        mapBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetailActivity.this,MapActivity.class);
-                startActivity(intent);
-            }
-        });
+//        mapBtn = (TextView)findViewById(R.id.kart);
+//        mapBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(DetailActivity.this,MapActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
 
@@ -180,6 +184,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
 
 
     }
+    //Adds latitude and longitude and a marker.
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         googleMap.addMarker(new MarkerOptions()
@@ -187,12 +192,8 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
                 .title("new Marker"));
                 //.icon(BitmapDescriptorFactory.fromResource(R.drawable.pinesmall)));
         latLing = new LatLng(62.1327800,6.0886100 );
-       /* map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentlocation, 16));
-        map.setMaxZoomPreference(0.5f);
-        map.setMinZoomPreference(5.0f);*/
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLing,13));
         rgViews.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.rb_normal){
@@ -217,7 +218,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
         } catch (Exception ignored){}
     }
 
-
+    //Get JSON array from URL. gets the JSON Objects and adds them to a ArrayList.
     private class GetComments extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -236,12 +237,12 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
             AddressHandler sh = new AddressHandler();
 
             // Making a request to url
-            JSONArray jsonStr = sh.makeServiceCall(url, GET, comments);
+            JSONArray jsonStr = sh.makeServiceCall(url, GET);
             Log.e(TAG, "Response from url: " + jsonStr);
             if (jsonStr != null) {
                 try {
 
-                    // looping through All comments
+                    // looping through All objects
                     for (int i = 0; i < jsonStr.length(); i++) {
                         JSONObject r = jsonStr.getJSONObject(i);
 
@@ -298,9 +299,7 @@ public class DetailActivity extends AppCompatActivity implements OnMapReadyCallb
              * Updating parsed JSON data into ListView
              * */
 
-            adapter = new SimpleAdapter(
-                    DetailActivity.this, comments,
-                    R.layout.comment, new String[]{"comment"},
+            adapter = new SimpleAdapter(DetailActivity.this, comments, R.layout.comment, new String[]{"comment"},
                     new int[]{R.id.userComment});
             listComments.setAdapter(adapter);
 

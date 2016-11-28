@@ -2,22 +2,14 @@ package com.example.prosjektfjell.oppogg;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -47,7 +39,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     }
 
-
+    //Adds latitude and longitude and a marker on full screen map
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         googleMap.addMarker(new MarkerOptions()
@@ -55,9 +47,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 .title("new Marker"));
                 //.icon(BitmapDescriptorFactory.fromResource(R.drawable.pinesmall)));
         latLing = new LatLng(62.1327800,6.0886100 );
-       /* map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentlocation, 16));
-        map.setMaxZoomPreference(0.5f);
-        map.setMinZoomPreference(5.0f);*/
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLing,13));
         rgViews.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 

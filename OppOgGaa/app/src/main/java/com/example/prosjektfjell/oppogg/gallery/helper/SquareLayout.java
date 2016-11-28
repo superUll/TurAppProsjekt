@@ -6,6 +6,9 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
+/**
+ * This class helps the images to display in square ratio in grid view
+ */
 
 class SquareLayout extends RelativeLayout {
 

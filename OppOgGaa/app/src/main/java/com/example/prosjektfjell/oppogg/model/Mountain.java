@@ -2,9 +2,11 @@ package com.example.prosjektfjell.oppogg.model;
 
 /**
  * Created by oleandreheggdal on 12.11.2016.
+ *
+ * Hold the mountain values. get and set.
  */
 
-import java.util.ArrayList;
+
 
 public class Mountain {
     private String name, thumbnailUrl;

@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 /**
  * Created by oleandreheggdal on 29.10.2016.
+ *
  */
 
 public class AddressHandler {
@@ -37,24 +38,11 @@ public class AddressHandler {
 
 
 
-    public AddressHandler() {
-    }
+    //Open a connection to the server
+    public JSONArray makeServiceCall(String url, String method) {
 
-    public JSONArray makeServiceCall(String url, String method, ArrayList<HashMap<String, String>> paramsl) {
-        //String response = null;
         stringBuilder = new StringBuilder();
-//        int i = 0;
-//        for (String key : params.get(i).keySet()) {
-//            try {
-//                if (i != 0) {
-//                    stringBuilder.append("&");
-//                }
-//                stringBuilder.append(key).append("=").append(URLEncoder.encode(params.get(i).get(key), charset));
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-//            i++;
-//        }
+
         if (method.equals("GET")) {
             if (stringBuilder.length() != 0) {
                 url += "?" + stringBuilder.toString();

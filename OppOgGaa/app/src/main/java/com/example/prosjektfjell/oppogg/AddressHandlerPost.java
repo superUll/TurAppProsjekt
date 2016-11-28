@@ -36,8 +36,9 @@ public class AddressHandlerPost {
     private String paramsString;
 
 
+    //Opens a connection to the server
     public JSONObject makeHttpRequest(String url, String method,HashMap<String, String> params) {
-
+        //Goes through the elements in the HashMap
         stringBuilder = new StringBuilder();
         int i = 0;
         for (String key : params.keySet()) {
