@@ -47,6 +47,7 @@ public class ContentActivity extends AppCompatActivity  {
 
     // ProgressDialog that will show a progress bar when the JSON is loading
     private ProgressDialog pDialog;
+    //Construct the data source
     private List<Mountain> mountains = new ArrayList<>();
     private ListView listView;
     private CustomListAdapter adapter;
@@ -62,8 +63,9 @@ public class ContentActivity extends AppCompatActivity  {
         setSupportActionBar(toolbar);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        // Create an instance of the CustomListAdapter
+        // Create the adapter to convert the array to Views
         adapter = new CustomListAdapter(this, mountains);
+
         listView = (ListView) findViewById(R.id.fjelListe);
         // set color of divider in the ListView and fade it out to the right.
         int[] colors = {0, 0xFFFFffff};
@@ -109,9 +111,9 @@ public class ContentActivity extends AppCompatActivity  {
                                 e.printStackTrace();
                             }
                         }
-                        //adapter.notifyDataSetChanged();
+                        //Attach the adapter to a ListView
                         listView.setAdapter(adapter);
-                        // Clicking on a listed item will stores the item in a Intent
+                        // Clicking on a listed item will stores the item in a Intent and new activity DetailActivity.
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

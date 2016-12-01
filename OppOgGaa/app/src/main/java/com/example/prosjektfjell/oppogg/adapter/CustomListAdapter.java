@@ -4,6 +4,7 @@ package com.example.prosjektfjell.oppogg.adapter;
  * Created by oleandreheggdal on 12.11.2016.
  * Provides access to the data.
  * The adapter is also responsible for making a View for each item in the data set
+ *
  */
 
 import android.app.Activity;
@@ -29,6 +30,7 @@ public class CustomListAdapter extends BaseAdapter {
     private List<Mountain> mountains;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
+    // constructor and the getView() method describe the translation between the data item and the View to display.
     public CustomListAdapter(Activity activity, List<Mountain> mountains) {
         this.activity = activity;
         this.mountains = mountains;
@@ -39,6 +41,7 @@ public class CustomListAdapter extends BaseAdapter {
         return mountains.size();
     }
 
+    //Get the data item associated with the specified position in the data set.
     @Override
     public Object getItem(int location) {
         return mountains.get(location);
@@ -49,6 +52,8 @@ public class CustomListAdapter extends BaseAdapter {
         return position;
     }
 
+    //Define the adapter to describe the process of converting the Java object to a View
+    //Returns the view used as a row within the ListView at a particular position.
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
